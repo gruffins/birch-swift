@@ -1,0 +1,33 @@
+PODS:
+  - Anchorage (4.5.0)
+  - Birch (1.0.0)
+  - Birch/Tests (1.0.0):
+    - Nimble
+    - Quick
+  - Nimble (10.0.0)
+  - Quick (5.0.1)
+
+DEPENDENCIES:
+  - Anchorage
+  - Birch (from `../`)
+  - Birch/Tests (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Anchorage
+    - Nimble
+    - Quick
+
+EXTERNAL SOURCES:
+  Birch:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Anchorage: 1961bc81c84aeed54ad7ffc697c50cd9de748ba6
+  Birch: 5d940488381029bf174a1dc0f929dca43e2f1739
+  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
+  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+
+PODFILE CHECKSUM: f4d41f9ba559bd25e54d80717e1fd4d788536b54
+
+COCOAPODS: 1.11.3

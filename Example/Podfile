@@ -1,0 +1,8 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'Birch_Example' do
+  pod 'Birch', path: '../', testspecs: ['Tests']
+  pod 'Anchorage'
+end
