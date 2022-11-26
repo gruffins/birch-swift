@@ -1,0 +1,14 @@
+name: Tests
+on: [push, pull_request]
+
+jobs:
+  specs:
+    name: Specs
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Specs
+        run: bundle exec fastlane specs

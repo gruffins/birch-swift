@@ -192,7 +192,7 @@ class EngineTests: QuickSpec {
                 beforeEach {
                     Birch.optOut = true
                 }
-                
+
                 it("returns false") {
                     expect(engine.syncConfiguration()).to(beFalse())
                 }
