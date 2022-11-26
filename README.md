@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Birch.initialize("YOUR_API_KEY")
-        Birch.debug = true // this should be turned off in a production build. Debug mode allows you to see Birch operating and artifically lowers the log level and flush period.
+        Birch.debug = true // this should be turned off in a production build. Debug mode allows you to see Birch operating and artificially lowers the log level and flush period.
 
         return true
     }
@@ -104,6 +104,33 @@ Birch.optOut = true
 ```
 
 Your application is responsible for changing this and setting it to the correct value at launch. Birch will not remember the last setting and it defaults to `false`.
+
+# Log Scrubbing
+
+Birch comes preconfigured with an email and password scrubber to ensure sensitive data is __NOT__ logged. Emails and passwords are replaced with `[FILTERED]` at the logger level so the data never reaches Birch servers.
+
+If you wish to configure additional scrubbers, implement the `Scrubber` protocol and initialize the logger with all the scrubbers you want to use.
+
+```swift
+import Birch
+
+class YourScrubber: Scrubber {
+
+    init() {}
+
+    public func scrub(input: String) -> String {
+        return input.replacingOccurrences(
+            of: "YOUR_REGEX,
+            with: "[FILTERED]",
+            options: [.regularExpression, .caseInsensitive]
+        )
+    }
+}
+```
+
+```swift
+Birch.initialize("api_key", scrubbers: [PasswordScrubber(), EmailScrubber(), YourScrubber()])
+```
 
 # CocoaLumberjack
 You can use the supplied wrapper if you want to send your logs from CocoaLumberjack to Birch.
