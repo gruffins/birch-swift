@@ -87,6 +87,16 @@ func onLogin(user: User) {
 }
 ```
 
+# Opt Out
+
+To comply with different sets of regulations such as GDPR or CCPA, you may be required to allow users to opt out of log collection.
+
+```swift
+Birch.optOut = true
+```
+
+Your application is responsible for changing this and setting it to the correct value at launch. Birch will not remember the last setting and it defaults to `false`.
+
 # CocoaLumberjack
 You can use the supplied wrapper if you want to send your logs from CocoaLumberjack to Birch.
 

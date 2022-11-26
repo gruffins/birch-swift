@@ -37,6 +37,11 @@ class EngineTests: QuickSpec {
             )
         }
 
+        afterEach {
+            Birch.optOut = false
+            Birch.debug = false
+        }
+
         describe("start()") {
             it("starts the trim timer") {
                 engine.start()
@@ -55,10 +60,31 @@ class EngineTests: QuickSpec {
         }
 
         describe("log()") {
-            it("logs the message") {
-                logger.level = .trace
-                engine.log(level: .trace, message: { "message" })
-                expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+            context("opted in") {
+                it("logs the message") {
+                    logger.level = .trace
+                    engine.log(level: .trace, message: { "message" })
+                    expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                }
+
+                it("returns true") {
+                    logger.level = .trace
+                    let result = engine.log(level: .trace, message: { "message" })
+                    expect(result).to(beTrue())
+
+                }
+            }
+
+            context("opted out") {
+                beforeEach {
+                    Birch.optOut = true
+                }
+
+                it("returns false") {
+                    logger.level = .trace
+                    let result = engine.log(level: .trace, message: { "message" })
+                    expect(result).to(beFalse())
+                }
             }
         }
 
@@ -68,36 +94,65 @@ class EngineTests: QuickSpec {
             beforeEach {
                 file = logger.directory.appendingPathComponent("\(Int(Date().timeIntervalSince1970))")
             }
-            it("deletes empty files") {
-                Utils.createFile(url: file)
-                engine.flush()
-                expect(Utils.fileExists(url: file)).toEventually(beFalse())
+
+            context("opted in") {
+                it("deletes empty files") {
+                    Utils.createFile(url: file)
+                    engine.flush()
+                    expect(Utils.fileExists(url: file)).toEventually(beFalse())
+                }
+
+                it("deletes files on success") {
+                    Utils.createFile(url: file)
+                    Utils.safeIgnore {
+                        try "a".write(to: file, atomically: true, encoding: .utf8)
+                    }
+                    http.testSession.statusCode = 201
+                    engine.flush()
+                    expect(Utils.fileExists(url: file)).toEventually(beFalse())
+                }
+
+                it("keeps files on failure") {
+                    Utils.createFile(url: file)
+                    Utils.safeIgnore {
+                        try "a".write(to: file, atomically: true, encoding: .utf8)
+                    }
+                    http.testSession.statusCode = 500
+                    engine.flush()
+                    expect(Utils.fileExists(url: file)).toEventually(beTrue())
+                }
+
+                it("returns true") {
+                    expect(engine.flush()).to(beTrue())
+                }
             }
 
-            it("deletes files on success") {
-                Utils.createFile(url: file)
-                Utils.safeIgnore {
-                    try "a".write(to: file, atomically: true, encoding: .utf8)
+            context("opted out") {
+                beforeEach {
+                    Birch.optOut = true
                 }
-                http.testSession.statusCode = 201
-                engine.flush()
-                expect(Utils.fileExists(url: file)).toEventually(beFalse())
-            }
 
-            it("keeps files on failure") {
-                Utils.createFile(url: file)
-                Utils.safeIgnore {
-                    try "a".write(to: file, atomically: true, encoding: .utf8)
+                it("returns false") {
+                    expect(engine.flush()).to(beFalse())
                 }
-                http.testSession.statusCode = 500
-                engine.flush()
-                expect(Utils.fileExists(url: file)).toEventually(beTrue())
             }
         }
 
         describe("updateSource()") {
-            it("updates the source") {
-                engine.updateSource(source: source)
+            context("opted in") {
+                it("returns true") {
+                    expect(engine.updateSource(source: source)).to(beTrue())
+                }
+            }
+
+            context("opted out") {
+                beforeEach {
+                    Birch.optOut = true
+                }
+
+                it("doesnt update the source") {
+                    expect(engine.updateSource(source: source)).to(beFalse())
+                }
             }
         }
 
@@ -111,21 +166,38 @@ class EngineTests: QuickSpec {
                 )!
             }
 
-            it("updates storage") {
-                engine.syncConfiguration()
-                expect(storage.logLevel).toEventually(equal(.info))
-                expect(storage.flushPeriod).toEventually(equal(10))
+            context("opted in") {
+                it("updates storage") {
+                    engine.syncConfiguration()
+                    expect(storage.logLevel).toEventually(equal(.info))
+                    expect(storage.flushPeriod).toEventually(equal(10))
+                }
+
+                it("updates the logger") {
+                    engine.syncConfiguration()
+                    expect(logger.level).toEventually(equal(.info))
+                }
+
+                it("updates the flush timer") {
+                    engine.syncConfiguration()
+                    expect(engine.timers[.flush]).toEventuallyNot(beNil())
+                }
+
+                it("returns true") {
+                    expect(engine.syncConfiguration()).to(beTrue())
+                }
             }
 
-            it("updates the logger") {
-                engine.syncConfiguration()
-                expect(logger.level).toEventually(equal(.info))
+            context("opted out") {
+                beforeEach {
+                    Birch.optOut = true
+                }
+                
+                it("returns false") {
+                    expect(engine.syncConfiguration()).to(beFalse())
+                }
             }
 
-            it("updates the flush timer") {
-                engine.syncConfiguration()
-                expect(engine.timers[.flush]).toEventuallyNot(beNil())
-            }
         }
 
         describe("trimFiles()") {
