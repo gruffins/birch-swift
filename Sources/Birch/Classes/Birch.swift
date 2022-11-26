@@ -22,6 +22,8 @@ public class Birch {
         }
     }
 
+    public static var optOut: Bool = false
+
     public static var host: String? {
         get {
             return Network.Constants.HOST

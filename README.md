@@ -1,4 +1,7 @@
 # Birch
+![Tests](https://github.com/gruffins/birch-ios/actions/workflows/tests.yml/badge.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods compatible](https://img.shields.io/cocoapods/v/Birch.svg)](https://cocoapods.org/pods/Birch)
 
 Simple, lightweight remote logging for iOS.
 
@@ -86,6 +89,16 @@ func onLogin(user: User) {
   Birch.customProperties = ["country": user.country]
 }
 ```
+
+# Opt Out
+
+To comply with different sets of regulations such as GDPR or CCPA, you may be required to allow users to opt out of log collection.
+
+```swift
+Birch.optOut = true
+```
+
+Your application is responsible for changing this and setting it to the correct value at launch. Birch will not remember the last setting and it defaults to `false`.
 
 # CocoaLumberjack
 You can use the supplied wrapper if you want to send your logs from CocoaLumberjack to Birch.

@@ -91,7 +91,9 @@ class Engine {
         }
     }
 
-    func log(level: Logger.Level, message: @escaping () -> String) {
+    @discardableResult func log(level: Logger.Level, message: @escaping () -> String) -> Bool {
+        guard !Birch.optOut else { return false }
+
         let timestamp = Utils.dateFormatter.string(from: Date())
 
         logger.log(
@@ -105,9 +107,12 @@ class Engine {
                 ]) ?? ""
             },
             original: message)
+        return true
     }
 
-    func flush() {
+    @discardableResult func flush() -> Bool {
+        guard !Birch.optOut else { return false }
+
         queue.async {
             self.logger.rollFile()
             self.logger.nonCurrentFiles
@@ -128,15 +133,21 @@ class Engine {
                     }
                 }
         }
+        return true
     }
 
-    func updateSource(source: Source) {
+    @discardableResult func updateSource(source: Source) -> Bool {
+        guard !Birch.optOut else { return false }
+
         queue.async {
             self.network.syncSource(source: source)
         }
+        return true
     }
 
-    func syncConfiguration() {
+    @discardableResult func syncConfiguration() -> Bool {
+        guard !Birch.optOut else { return false }
+
         queue.async {
             self.network.getConfiguration(source: self.source) { json in
                 let level = Logger.Level(rawValue: (json["log_level"] as? Int) ?? Logger.Level.error.rawValue)
@@ -149,6 +160,7 @@ class Engine {
                 self.flushPeriod = period
             }
         }
+        return true
     }
 
     func trimFiles(now: Date = Date()) {
