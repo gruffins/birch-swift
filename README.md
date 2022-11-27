@@ -120,7 +120,7 @@ class YourScrubber: Scrubber {
 
     public func scrub(input: String) -> String {
         return input.replacingOccurrences(
-            of: "YOUR_REGEX,
+            of: "YOUR_REGEX",
             with: "[FILTERED]",
             options: [.regularExpression, .caseInsensitive]
         )
