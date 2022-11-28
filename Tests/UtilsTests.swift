@@ -117,5 +117,11 @@ class UtilsTest: QuickSpec {
                 expect(Utils.fileExists(url: directory)).to(beTrue())
             }
         }
+
+        describe("diskAvailable()") {
+            it("returns something") {
+                expect(Utils.diskAvailable()).to(beTrue())
+            }
+        }
     }
 }
