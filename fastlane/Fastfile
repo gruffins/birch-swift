@@ -5,6 +5,7 @@ platform :ios do
     scan(
       scheme: 'Birch-Unit-Tests',
       derived_data_path: 'DerivedData'
+      code_coverage: true
     )
   end
 

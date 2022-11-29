@@ -1,5 +1,9 @@
 name: Tests
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   specs:
@@ -12,3 +16,4 @@ jobs:
           bundler-cache: true
       - name: Specs
         run: bundle exec fastlane specs
+      - uses: codecov/codecov-action@v3

@@ -8,7 +8,17 @@
 import Foundation
 import UIKit
 
-class Engine {
+protocol EngineProtocol {
+    var source: Source { get }
+
+    func start()
+    @discardableResult func log(level: Logger.Level, message: @escaping () -> String) -> Bool
+    @discardableResult func flush() -> Bool
+    @discardableResult func updateSource(source: Source) -> Bool
+    @discardableResult func syncConfiguration() -> Bool
+}
+
+class Engine: EngineProtocol {
     struct Constants {
         static let SYNC_PERIOD_SECONDS = 60 * 15
         static let FLUSH_PERIOD_SECONDS = 60 * 30
