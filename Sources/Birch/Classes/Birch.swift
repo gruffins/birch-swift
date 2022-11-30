@@ -8,7 +8,7 @@
 import Foundation
 
 public class Birch {
-    static var engine: Engine?
+    static var engine: EngineProtocol?
     static var flushPeriod: Int?
 
     public static var debug: Bool = false {

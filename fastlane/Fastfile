@@ -4,7 +4,9 @@ platform :ios do
   lane :specs do
     scan(
       scheme: 'Birch-Unit-Tests',
-      derived_data_path: 'DerivedData'
+      derived_data_path: 'DerivedData',
+      code_coverage: true,
+      result_bundle: true
     )
   end
 
