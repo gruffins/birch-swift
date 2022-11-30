@@ -6,6 +6,7 @@
 ![Tests](https://github.com/gruffins/birch-ios/actions/workflows/tests.yml/badge.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Birch.svg)](https://cocoapods.org/pods/Birch)
+[![codecov](https://codecov.io/gh/gruffins/birch-ios/branch/main/graph/badge.svg?token=EQB1TQO74C)](https://codecov.io/gh/gruffins/birch-ios)
 
 Simple, lightweight remote logging for iOS.
 
