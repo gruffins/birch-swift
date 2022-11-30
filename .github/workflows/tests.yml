@@ -17,3 +17,5 @@ jobs:
       - name: Specs
         run: bundle exec fastlane specs
       - uses: codecov/codecov-action@v3
+        with:
+          gcov: true
