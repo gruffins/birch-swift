@@ -9,8 +9,6 @@ jobs:
   specs:
     name: Specs
     runs-on: macos-latest
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_13.4.1.app
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
@@ -19,3 +17,6 @@ jobs:
       - name: Specs
         run: bundle exec fastlane specs
       - uses: codecov/codecov-action@v3
+        with:
+          xcode: true
+          xcode_archive_path: fastlane/test_output/Birch-Unit-Tests.xcresult
