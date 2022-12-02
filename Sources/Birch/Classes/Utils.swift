@@ -98,4 +98,29 @@ extension Utils {
             try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         }
     }
+
+    static func diskAvailable() -> Bool {
+        var available = false
+
+        safeIgnore {
+            let manager = FileManager.default
+            let url = manager.temporaryDirectory
+
+            if #available(iOS 11.0, *) {
+                let resourceValues = try url.resourceValues(forKeys: [.volumeAvailableCapacityForOpportunisticUsageKey])
+
+                if let capacity = resourceValues.volumeAvailableCapacityForOpportunisticUsage {
+                    available = capacity > 0
+                }
+            } else {
+                let attributes = try? manager.attributesOfFileSystem(forPath: url.path)
+
+                if let capacity = attributes?[.systemFreeSize] as? Int {
+                    available = capacity > 0
+                }
+            }
+        }
+
+        return available
+    }
 }

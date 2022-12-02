@@ -43,7 +43,7 @@ class Logger {
     }
 
     func log(level: Level, block: @escaping () -> String, original: @escaping () -> String) {
-        if level.rawValue >= self.level.rawValue || Birch.debug {
+        if Utils.diskAvailable() && (level.rawValue >= self.level.rawValue || Birch.debug) {
             queue.async {
                 Utils.safeIgnore {
                     self.ensureCurrentFileExists()
