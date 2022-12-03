@@ -33,7 +33,11 @@ class EngineTests: QuickSpec {
                 logger: logger,
                 storage: storage,
                 network: network,
-                eventBus: eventBus
+                eventBus: eventBus,
+                scrubbers: [
+                    PasswordScrubber(),
+                    EmailScrubber()
+                ]
             )
         }
 
@@ -65,6 +69,12 @@ class EngineTests: QuickSpec {
                     logger.level = .trace
                     engine.log(level: .trace, message: { "message" })
                     expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                }
+
+                it("scrubs messages") {
+                    logger.level = .trace
+                    engine.log(level: .trace, message: { "https://birch.ryanfung.com/?email=abcd+test@domain.com&password=password123" })
+                    expect(String(data: FileManager.default.contents(atPath: logger.current.path)!, encoding: .utf8)).toEventually(contain("email=[FILTERED]&password=[FILTERED]"))
                 }
 
                 it("returns true") {

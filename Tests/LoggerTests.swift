@@ -59,6 +59,50 @@ class LoggerTests: QuickSpec {
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
                 expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
             }
+
+            describe("with debug") {
+                it("logs all levels") {
+                    Birch.debug = true
+                    
+                    var calls: [Logger.Level: Bool] = [
+                        .trace: false,
+                        .debug: false,
+                        .info: false,
+                        .warn: false,
+                        .error: false
+                    ]
+
+                    let block = { "" }
+
+                    logger.log(level: .trace, block: block) {
+                        calls[.trace] = true
+                        return ""
+                    }
+                    logger.log(level: .debug, block: block) {
+                        calls[.debug] = true
+                        return ""
+                    }
+                    logger.log(level: .info, block: block) {
+                        calls[.info] = true
+                        return ""
+                    }
+                    logger.log(level: .warn, block: block) {
+                        calls[.warn] = true
+                        return ""
+                    }
+                    logger.log(level: .error, block: block) {
+                        calls[.error] = true
+                        return ""
+                    }
+                    logger.log(level: .none, block: block, original: block)
+
+                    expect(calls[.trace]).toEventually(beTrue())
+                    expect(calls[.debug]).toEventually(beTrue())
+                    expect(calls[.info]).toEventually(beTrue())
+                    expect(calls[.warn]).toEventually(beTrue())
+                    expect(calls[.error]).toEventually(beTrue())
+                }
+            }
         }
 
         describe("rollFile()") {

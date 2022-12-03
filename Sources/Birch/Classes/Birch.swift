@@ -63,7 +63,13 @@ public class Birch {
         }
     }
 
-    public static func initialize(_ apiKey: String) {
+    public static func initialize(
+        _ apiKey: String,
+        scrubbers: [Scrubber] = [
+            PasswordScrubber(),
+            EmailScrubber()
+        ]
+    ) {
         if engine == nil {
             let eventBus = EventBus()
             let storage = Storage()
@@ -76,7 +82,8 @@ public class Birch {
                 logger: logger,
                 storage: storage,
                 network: network,
-                eventBus: eventBus
+                eventBus: eventBus,
+                scrubbers: scrubbers
             )
             engine?.start()
         }

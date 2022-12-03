@@ -36,6 +36,7 @@ class Engine: EngineProtocol {
     private let storage: Storage
     private let network: Network
     private let eventBus: EventBus
+    private let scrubbers: [Scrubber]
     private var isStarted = false
     private var flushPeriod: Int {
         didSet {
@@ -60,7 +61,8 @@ class Engine: EngineProtocol {
         logger: Logger,
         storage: Storage,
         network: Network,
-        eventBus: EventBus
+        eventBus: EventBus,
+        scrubbers: [Scrubber]
     ) {
         self.source = source
         self.logger = logger
@@ -68,6 +70,7 @@ class Engine: EngineProtocol {
         self.network = network
         self.eventBus = eventBus
         self.flushPeriod = storage.flushPeriod
+        self.scrubbers = scrubbers
 
         eventBus.subscribe(listener: self)
     }
@@ -105,6 +108,11 @@ class Engine: EngineProtocol {
         guard !Birch.optOut else { return false }
 
         let timestamp = Utils.dateFormatter.string(from: Date())
+        let scrubbed = {
+            self.scrubbers.reduce(message()) { acc, scrubber in
+                scrubber.scrub(input: acc)
+            }
+        }
 
         logger.log(
             level: level,
@@ -113,10 +121,10 @@ class Engine: EngineProtocol {
                     "timestamp": timestamp,
                     "level": level.rawValue,
                     "source": self.source.toJson(),
-                    "message": message()
+                    "message": scrubbed()
                 ]) ?? ""
             },
-            original: message)
+            original: scrubbed)
         return true
     }
 
