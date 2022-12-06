@@ -18,6 +18,7 @@ Sign up for your free account at [Birch](https://birch.ryanfung.com).
 ```ruby
 pod 'Birch'
 pod 'BirchLumberjack' # optional. only used if you use CocoaLumberjack
+pod 'BirchXCGLogger' # optional. only used if you use XCGLogger
 ```
 
 ## Using Carthage
@@ -137,4 +138,12 @@ You can use the supplied wrapper if you want to send your logs from CocoaLumberj
 
 ```swift
 DDLog.add(DDBirchLogger())
+```
+
+# XCGLogger
+You can use the supplied wrapper if you want to send your logs from XCGLogger to Birch.
+
+```swift
+let logger = XCGLogger(identifier: "your_identifier", includeDefaultDestinations: false)
+logger.add(destination: BirchXCGLogger())
 ```
