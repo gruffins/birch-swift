@@ -30,6 +30,8 @@ github "gruffins/birch-ios"
 
 In your app delegate class, initialize the logger.
 ```swift
+import Birch
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -137,6 +139,8 @@ Birch.initialize("api_key", scrubbers: [PasswordScrubber(), EmailScrubber(), You
 You can use the supplied wrapper if you want to send your logs from CocoaLumberjack to Birch.
 
 ```swift
+import BirchLumberjack
+
 DDLog.add(DDBirchLogger())
 ```
 
@@ -144,6 +148,8 @@ DDLog.add(DDBirchLogger())
 You can use the supplied wrapper if you want to send your logs from XCGLogger to Birch.
 
 ```swift
+import BirchXCGLogger
+
 let logger = XCGLogger(identifier: "your_identifier", includeDefaultDestinations: false)
 logger.add(destination: BirchXCGLogger())
 ```
