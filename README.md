@@ -6,6 +6,7 @@
 ![Tests](https://github.com/gruffins/birch-ios/actions/workflows/tests.yml/badge.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Birch.svg)](https://cocoapods.org/pods/Birch)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 [![codecov](https://codecov.io/gh/gruffins/birch-ios/branch/main/graph/badge.svg?token=EQB1TQO74C)](https://codecov.io/gh/gruffins/birch-ios)
 
 Simple, lightweight remote logging for iOS.
@@ -24,6 +25,11 @@ pod 'BirchXCGLogger' # optional. only used if you use XCGLogger
 ## Using Carthage
 ```ruby
 github "gruffins/birch-ios"
+```
+
+## Using Swift Package Manager
+```
+.package(url: "https://github.com/gruffins/birch-ios.git", majorVersion: 1)
 ```
 
 # Setup
