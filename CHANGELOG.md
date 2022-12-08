@@ -1,5 +1,9 @@
 # Changes
 
+1.1.2
+----------
+- Adjust delayed initialization to reduce impact on startup.
+
 1.1.1
 ----------
 - Add SPM support

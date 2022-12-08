@@ -100,6 +100,18 @@ class Engine: EngineProtocol {
                 ) { [weak self] _ in self?.flush() }
             }
 
+            queue.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+                self?.trimFiles()
+            }
+
+            queue.asyncAfter(deadline: .now() + 10.0) { [weak self] in
+                self?.syncConfiguration()
+            }
+
+            queue.asyncAfter(deadline: .now() + 15.0) { [weak self] in
+                self?.flush()
+            }
+
             updateSource(source: source)
         }
     }
