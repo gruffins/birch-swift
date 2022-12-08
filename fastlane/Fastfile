@@ -14,8 +14,6 @@ platform :ios do
     version = read_podspec['version']
 
     pod_lib_lint
-    add_git_tag(tag: version)
-    push_to_git_remote
     pod_push(allow_warnings: true, verbose: true)
   end
 end
