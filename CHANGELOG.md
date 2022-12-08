@@ -1,5 +1,9 @@
 # Changes
 
+1.1.1
+----------
+- Add SPM support
+
 1.1.0
 ----------
 - Stops logging after disk is full
