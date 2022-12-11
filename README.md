@@ -144,6 +144,8 @@ Birch.initialize("api_key", scrubbers: [PasswordScrubber(), EmailScrubber(), You
 # CocoaLumberjack
 You can use the supplied wrapper if you want to send your logs from CocoaLumberjack to Birch.
 
+See [Birch-Lumberjack](https://github.com/gruffins/birch-lumberjack) for more details.
+
 ```swift
 import BirchLumberjack
 
@@ -152,6 +154,8 @@ DDLog.add(DDBirchLogger())
 
 # XCGLogger
 You can use the supplied wrapper if you want to send your logs from XCGLogger to Birch.
+
+See [Birch-XCGLogger](https://github.com/gruffins/birch-xcglogger) for more details.
 
 ```swift
 import BirchXCGLogger
