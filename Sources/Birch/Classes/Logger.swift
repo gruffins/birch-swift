@@ -19,6 +19,7 @@ class Logger {
     private let queue = DispatchQueue(label: "Birch-Logger")
     private var fileHandle: FileHandle?
 
+    let encryption: Encryption?
     let directory: URL
     let current: URL
 
@@ -33,7 +34,9 @@ class Logger {
         }
     }
 
-    init() {
+    init(encryption: Encryption?) {
+        self.encryption = encryption
+
         directory = FileManager.default.temporaryDirectory.appendingPathComponent("birch")
         current = directory.appendingPathComponent("current")
 
@@ -58,7 +61,18 @@ class Logger {
                         self.fileHandle?.seekToEndOfFile()
                     }
 
-                    if let data = "\(block()),\n".data(using: .utf8) {
+                    var message: String
+
+                    if let encryption = self.encryption {
+                        message = Utils.dictionaryToJson(input: [
+                            "em": encryption.encrypt(input: block()),
+                            "ek": encryption.encryptedKey
+                        ]) ?? "{}"
+                    } else {
+                        message = block()
+                    }
+
+                    if let data = "\(message),\n".data(using: .utf8) {
                         self.fileHandle?.write(data)
                     }
 

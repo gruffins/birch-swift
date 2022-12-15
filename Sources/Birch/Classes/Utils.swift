@@ -124,3 +124,27 @@ extension Utils {
         return available
     }
 }
+
+// Encryption
+
+extension Utils {
+    static func parsePublicKey(pem: String) -> SecKey? {
+        if let data = Data(
+            base64Encoded: pem
+                .replacingOccurrences(of: "-----BEGIN PUBLIC KEY-----", with: "")
+                .replacingOccurrences(of: "-----END PUBLIC KEY-----", with: "")
+                .replacingOccurrences(of: "\n", with: ""),
+            options: .ignoreUnknownCharacters
+        ) {
+            let attrs: [String: Any] = [
+                String(kSecAttrKeyType): kSecAttrKeyTypeRSA,
+                String(kSecAttrKeyClass): kSecAttrKeyClassPublic,
+                String(kSecAttrKeySizeInBits): data.count * 8
+            ]
+
+            return SecKeyCreateWithData(data as CFData, attrs as CFDictionary, nil)
+        }
+
+        return nil
+    }
+}

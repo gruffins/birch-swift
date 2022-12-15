@@ -16,7 +16,7 @@ class LoggerTests: QuickSpec {
         var logger: Logger!
 
         beforeEach {
-            logger = Logger()
+            logger = Logger(encryption: nil)
         }
 
         afterEach {
@@ -101,6 +101,36 @@ class LoggerTests: QuickSpec {
                     expect(calls[.info]).toEventually(beTrue())
                     expect(calls[.warn]).toEventually(beTrue())
                     expect(calls[.error]).toEventually(beTrue())
+                }
+            }
+
+            context("with encryption") {
+                beforeEach {
+                    logger = Logger(
+                        encryption: Encryption.create(
+                            publicKey: EncryptionTests.Constants.PUBLIC_KEY
+                        )
+                    )
+                }
+
+                it("encrypts the logs") {
+                    logger.level = .trace
+                    logger.log(level: .trace, block: { "message" }, original: { "message" })
+                    expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                    let contents = try String(contentsOf: logger.current, encoding: .utf8)
+                    expect(contents).to(contain("em"))
+                    expect(contents).to(contain("ek"))
+                }
+            }
+
+            context("without encryption") {
+                it("writes in plain text") {
+                    logger.level = .trace
+                    logger.log(level: .trace, block: { "message" }, original: { "message" })
+                    expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                    let contents = try String(contentsOf: logger.current, encoding: .utf8)
+                    expect(contents).notTo(contain("em"))
+                    expect(contents).notTo(contain("ek"))
                 }
             }
         }
