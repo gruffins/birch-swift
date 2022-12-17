@@ -42,7 +42,7 @@ import Birch
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        Birch.initialize("YOUR_API_KEY")
+        Birch.initialize("YOUR_API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY")
         Birch.debug = true // this should be turned off in a production build. Debug mode allows you to see Birch operating and artificially lowers the log level and flush period.
 
         return true
@@ -92,6 +92,14 @@ Birch.debug = true
 
 The default configuration is `ERROR` and log flushing every hour. This means any logs lower than `ERROR` are skipped and logs will only be delivered once an hour to preserve battery life. You can change these settings on a per source level by visiting your Birch dashboard.
 
+### Encryption
+
+We **HIGHLY** recommend using encryption to encrypt your logs at rest. If you leave out the public encryption key, Birch will save logs on the device in clear text.
+
+An invalid public key will throw an exception.
+
+To learn more, see our [Encryption](https://github.com/gruffins/birch-ios/wiki/Encryption) documentation.
+
 # Identification
 You should set an identifier so you can identify the source in the dashboard. If you do not set one, you will only be able to find devices by the assigned uuid via `Birch.uuid`.
 
@@ -138,7 +146,7 @@ class YourScrubber: Scrubber {
 ```
 
 ```swift
-Birch.initialize("api_key", scrubbers: [PasswordScrubber(), EmailScrubber(), YourScrubber()])
+Birch.initialize("API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY", scrubbers: [PasswordScrubber(), EmailScrubber(), YourScrubber()])
 ```
 
 # CocoaLumberjack

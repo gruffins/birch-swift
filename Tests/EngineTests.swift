@@ -23,7 +23,7 @@ class EngineTests: QuickSpec {
 
         beforeEach {
             storage = Storage()
-            logger = Logger()
+            logger = Logger(encryption: nil)
             eventBus = EventBus()
             source = Source(storage: storage, eventBus: eventBus)
             http = TestHTTP()

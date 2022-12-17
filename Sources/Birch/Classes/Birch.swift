@@ -65,16 +65,23 @@ public class Birch {
 
     public static func initialize(
         _ apiKey: String,
+        publicKey: String? = nil,
         scrubbers: [Scrubber] = [
             PasswordScrubber(),
             EmailScrubber()
         ]
     ) {
         if engine == nil {
+            var encryption: Encryption?
+
+            if let publicKey = publicKey, let enc = Encryption.create(publicKey: publicKey) {
+                encryption = enc
+            }
+
             let eventBus = EventBus()
             let storage = Storage()
             let source = Source(storage: storage, eventBus: eventBus)
-            let logger = Logger()
+            let logger = Logger(encryption: encryption)
             let network = Network(apiKey: apiKey)
 
             engine = Engine(
