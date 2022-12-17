@@ -1,5 +1,9 @@
 # Changes
 
+1.2.0
+----------
+- Add encryption at rest
+
 1.1.2
 ----------
 - Adjust delayed initialization to reduce impact on startup.
