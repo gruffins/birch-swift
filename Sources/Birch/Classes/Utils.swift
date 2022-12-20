@@ -55,8 +55,7 @@ extension Utils {
 
     static func jsonToDictionary(input: String) -> [String: Any]? {
         if let data = input.data(using: .utf8),
-           let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-           let json = json
+           let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         {
             return json
         }
