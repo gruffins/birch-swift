@@ -88,6 +88,15 @@ class NetworkTests: QuickSpec {
 
             it("calls the callback on any other response") {
                 http.testSession.statusCode = 200
+                http.testSession.responseBody = Utils.dictionaryToJson(
+                    input: [
+                        "source_configuration": [
+                            "log_level": Logger.Level.info.rawValue,
+                            "flush_period_seconds": 10
+                        ]
+                    ]
+                )!
+
                 waitUntil { done in
                     network.getConfiguration(source: source) { dict in
                         expect(dict).notTo(beNil())

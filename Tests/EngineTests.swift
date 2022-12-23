@@ -170,8 +170,10 @@ class EngineTests: QuickSpec {
             beforeEach {
                 http.testSession.responseBody = Utils.dictionaryToJson(
                     input: [
-                        "log_level": Logger.Level.info.rawValue,
-                        "flush_period_seconds": 10
+                        "source_configuration": [
+                            "log_level": Logger.Level.info.rawValue,
+                            "flush_period_seconds": 10
+                        ]
                     ]
                 )!
             }

@@ -107,8 +107,9 @@ class Network {
                             Birch.d { "[Birch] Get configuration responded. success=\(response.success)" }
                         }
 
-                        if let dict = Utils.jsonToDictionary(input: response.body) {
-                            callback(dict)
+                        if let dict = Utils.jsonToDictionary(input: response.body),
+                           let sourceConfig = dict["source_configuration"] as? [String: Any] {
+                            callback(sourceConfig)
                         }
                     }
                 }
