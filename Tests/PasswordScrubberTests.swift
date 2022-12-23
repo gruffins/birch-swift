@@ -33,5 +33,15 @@ class PasswordScrubberTests: QuickSpec {
             let input = "https://birch.ryanfung.com/auth?username=test123&password=password123"
             expect(scrubber.scrub(input: input)).to(equal("https://birch.ryanfung.com/auth?username=test123&password=[FILTERED]"))
         }
+
+        it("scrubs json") {
+            let input = Utils.dictionaryToJson(input: ["password": "password123"])!
+            expect(scrubber.scrub(input: input)).to(equal("{\"password\":\"[FILTERED]\"}"))
+        }
+
+        it("scrubs json with spacing") {
+            let input = "{\"password\": \"password123\"}"
+            expect(scrubber.scrub(input: input)).to(equal("{\"password\": \"[FILTERED]\"}"))
+        }
     }
 }
