@@ -74,6 +74,12 @@ class Logger {
 
                     if let data = "\(message),\n".data(using: .utf8) {
                         self.fileHandle?.write(data)
+
+                        if #available(iOS 13.0, *) {
+                            try self.fileHandle?.synchronize()
+                        } else {
+                            self.fileHandle?.synchronizeFile()
+                        }
                     }
 
                     if Birch.debug {
