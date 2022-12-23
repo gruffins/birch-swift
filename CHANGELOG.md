@@ -1,5 +1,9 @@
 # Changes
 
+1.2.2
+----------
+- Adjust remote source configuration
+
 1.2.1
 ----------
 - Fixes SPM import
