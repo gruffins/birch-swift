@@ -1,5 +1,10 @@
 # Changes
 
+1.2.3
+----------
+- Rename repo to birch-swift.
+- Flush on every write to ensure file has all logs prior to rotating.
+
 1.2.2
 ----------
 - Adjust remote source configuration
