@@ -114,12 +114,17 @@ class LoggerTests: QuickSpec {
                 }
 
                 it("encrypts the logs") {
+                    Utils.deleteFile(url: logger.current)
                     logger.level = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
-                    let contents = try String(contentsOf: logger.current, encoding: .utf8)
-                    expect(contents).to(contain("em"))
-                    expect(contents).to(contain("ek"))
+                    waitUntil { done in
+                        if let contents = try? String(contentsOf: logger.current, encoding: .utf8), !contents.isEmpty {
+                            expect(contents).to(contain("em"))
+                            expect(contents).to(contain("ek"))
+                            done()
+                        }
+                    }
                 }
             }
 

@@ -3,11 +3,11 @@
 </p>
 
 # Birch
-![Tests](https://github.com/gruffins/birch-ios/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/gruffins/birch-swift/actions/workflows/tests.yml/badge.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Birch.svg)](https://cocoapods.org/pods/Birch)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-[![codecov](https://codecov.io/gh/gruffins/birch-ios/branch/main/graph/badge.svg?token=EQB1TQO74C)](https://codecov.io/gh/gruffins/birch-ios)
+[![codecov](https://codecov.io/gh/gruffins/birch-swift/branch/main/graph/badge.svg?token=EQB1TQO74C)](https://codecov.io/gh/gruffins/birch-swift)
 
 Simple, lightweight remote logging for iOS.
 
@@ -24,12 +24,12 @@ pod 'BirchXCGLogger' # optional. only used if you use XCGLogger
 
 ## Using Carthage
 ```ruby
-github "gruffins/birch-ios"
+github "gruffins/birch-swift"
 ```
 
 ## Using Swift Package Manager
 ```
-.package(url: "https://github.com/gruffins/birch-ios.git", majorVersion: 1)
+.package(url: "https://github.com/gruffins/birch-swift.git", majorVersion: 1)
 ```
 
 # Setup
@@ -98,7 +98,7 @@ We **HIGHLY** recommend using encryption to encrypt your logs at rest. If you le
 
 An invalid public key will throw an exception.
 
-To learn more, see our [Encryption](https://github.com/gruffins/birch-ios/wiki/Encryption) documentation.
+To learn more, see our [Encryption](https://github.com/gruffins/birch-swift/wiki/Encryption) documentation.
 
 # Identification
 You should set an identifier so you can identify the source in the dashboard. If you do not set one, you will only be able to find devices by the assigned uuid via `Birch.uuid`.

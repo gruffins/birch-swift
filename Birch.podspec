@@ -8,12 +8,12 @@
 
 Pod::Spec.new do |s|
   s.name = 'Birch'
-  s.version = '1.2.2'
+  s.version = '1.2.3'
   s.summary = 'Remote logger for the Birch platform.'
-  s.homepage = 'https://github.com/gruffins/birch-ios'
+  s.homepage = 'https://github.com/gruffins/birch-swift'
   s.license = { type: 'MIT', file: 'LICENSE' }
   s.author = { 'Ryan Fung' => 'ryan@ryanfung.com' }
-  s.source = { git: 'https://github.com/gruffins/birch-ios.git', tag: s.version.to_s }
+  s.source = { git: 'https://github.com/gruffins/birch-swift.git', tag: s.version.to_s }
   s.ios.deployment_target = '10.0'
   s.swift_version = '4.0'
   s.source_files = 'Sources/Birch/Classes/**/*'
