@@ -1,8 +1,8 @@
 {
   "name": "Birch",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "summary": "Remote logger for the Birch platform.",
-  "homepage": "https://github.com/gruffins/birch-ios",
+  "homepage": "https://github.com/gruffins/birch-swift",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -11,8 +11,8 @@
     "Ryan Fung": "ryan@ryanfung.com"
   },
   "source": {
-    "git": "https://github.com/gruffins/birch-ios.git",
-    "tag": "1.2.2"
+    "git": "https://github.com/gruffins/birch-swift.git",
+    "tag": "1.2.3"
   },
   "platforms": {
     "ios": "10.0"
