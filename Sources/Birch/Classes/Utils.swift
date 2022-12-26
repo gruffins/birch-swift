@@ -104,19 +104,9 @@ extension Utils {
         safeIgnore {
             let manager = FileManager.default
             let url = manager.temporaryDirectory
-
-            if #available(iOS 11.0, *) {
-                let resourceValues = try url.resourceValues(forKeys: [.volumeAvailableCapacityForOpportunisticUsageKey])
-
-                if let capacity = resourceValues.volumeAvailableCapacityForOpportunisticUsage {
-                    available = capacity > 0
-                }
-            } else {
-                let attributes = try? manager.attributesOfFileSystem(forPath: url.path)
-
-                if let capacity = attributes?[.systemFreeSize] as? Int {
-                    available = capacity > 0
-                }
+            let attributes = try? manager.attributesOfFileSystem(forPath: url.path)
+            if let capacity = attributes?[.systemFreeSize] as? Int {
+                available = capacity > 0
             }
         }
 
@@ -145,5 +135,15 @@ extension Utils {
         }
 
         return nil
+    }
+}
+
+// Compression
+
+extension Utils {
+
+    @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
+    static func compress(data: Data) throws -> Data {
+        return try (data as NSData).compressed(using: .zlib) as Data
     }
 }

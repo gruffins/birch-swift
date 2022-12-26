@@ -74,14 +74,22 @@ class HTTP {
         file: Data,
         headers: [String: String] = [:],
         onResponse: @escaping (Response) -> Void
-    ) {
+    ) throws {
+        var filename = "logs.txt"
+        var compressed = file
+
+        if #available(iOS 13.0, macOS 10.14, watchOS 6.0, tvOS 13.0, *) {
+            filename = "logs.txt.zlib"
+            compressed = try Utils.compress(data: file)
+        }
+
         let boundary = UUID().uuidString
         let mergedHeaders = ["Content-Type": "multipart/form-data; boundary=\(boundary)"].merging(headers) { (current, _) in current }
         let request = createRequest(method: "POST", url: url, headers: mergedHeaders)
         var body = Data()
         body.append("--\(boundary)\(Constants.LINE)".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"logs\"; filename=\"logs.txt\"\(Constants.LINE)\(Constants.LINE)".data(using: .utf8)!)
-        body.append(file)
+        body.append("Content-Disposition: form-data; name=\"logs\"; filename=\"\(filename)\"\(Constants.LINE)\(Constants.LINE)".data(using: .utf8)!)
+        body.append(compressed)
         body.append("--\(boundary)--\(Constants.LINE)".data(using: .utf8)!)
         let semaphore = DispatchSemaphore(value: 0)
         session.uploadTask(with: request, from: body) { data, response, _ in

@@ -34,6 +34,12 @@ class EncryptionTests: QuickSpec {
                 let input = "test"
                 expect(encryption.encrypt(input: input)).notTo(equal("test"))
             }
+
+            it("can reuse encryption") {
+                let input = "test"
+                let output = encryption.encrypt(input: input)
+                expect(encryption.encrypt(input: input)).notTo(equal(output))
+            }
         }
     }
 }

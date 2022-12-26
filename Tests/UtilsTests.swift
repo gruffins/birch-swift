@@ -137,5 +137,14 @@ class UtilsTest: QuickSpec {
                 }
             }
         }
+
+        describe("compress()") {
+            it("compresses") {
+                if #available(iOS 13, *) {
+                    let data = "test".data(using: .utf8)!
+                    expect(try Utils.compress(data: data)).notTo(beNil())
+                }
+            }
+        }
     }
 }
