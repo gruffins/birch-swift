@@ -1,5 +1,10 @@
 # Changes
 
+1.3.0
+----------
+- Add zlib compression.
+- Improve password scrubbing for json.
+
 1.2.3
 ----------
 - Rename repo to birch-swift.
