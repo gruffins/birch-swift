@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name = 'Birch'
-  s.version = '1.2.3'
+  s.version = '1.3.0'
   s.summary = 'Remote logger for the Birch platform.'
   s.homepage = 'https://github.com/gruffins/birch-swift'
   s.license = { type: 'MIT', file: 'LICENSE' }
