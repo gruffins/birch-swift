@@ -151,13 +151,15 @@ class Engine: EngineProtocol {
                     if Utils.fileSize(url: url) == 0 {
                         Utils.deleteFile(url: url)
                     } else {
-                        self.network.uploadLogs(url: url) { success in
-                            if success {
-                                if Birch.debug {
-                                    Birch.d { "[Birch] Removing file \(url.lastPathComponent)" }
-                                }
+                        Utils.safeIgnore {
+                            try self.network.uploadLogs(url: url) { success in
+                                if success {
+                                    if Birch.debug {
+                                        Birch.d { "[Birch] Removing file \(url.lastPathComponent)" }
+                                    }
 
-                                Utils.deleteFile(url: url)
+                                    Utils.deleteFile(url: url)
+                                }
                             }
                         }
                     }

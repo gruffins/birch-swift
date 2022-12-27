@@ -85,7 +85,7 @@ extension ViewController {
     }
 
     @objc func error() {
-        Birch.d { "error message" }
+        Birch.e { "error message" }
     }
 
     @objc func stressTest() {

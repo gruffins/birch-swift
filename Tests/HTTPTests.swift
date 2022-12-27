@@ -49,9 +49,11 @@ class HTTPTests: QuickSpec {
         describe("postData()") {
             it("calls the callback") {
                 waitUntil { done in
-                    http.post(url: url, file: Data()) { response in
-                        expect(response.success).to(beTrue())
-                        done()
+                    Utils.safeIgnore {
+                        try http.post(url: url, file: Data()) { response in
+                            expect(response.success).to(beTrue())
+                            done()
+                        }
                     }
                 }
             }

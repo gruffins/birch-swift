@@ -17,8 +17,13 @@ class NetworkTests: QuickSpec {
         var network: Network!
 
         beforeEach {
+            Birch.debug = true
             http = TestHTTP()
             network = Network(apiKey: "key", configuration: Network.Configuration(), http: http)
+        }
+
+        afterEach {
+            Birch.debug = false
         }
 
         describe("uploadLogs()") {
@@ -31,7 +36,7 @@ class NetworkTests: QuickSpec {
 
             it("doesnt call callback on unauthorized") {
                 http.testSession.statusCode = 401
-                network.uploadLogs(url: file) { _ in
+                try network.uploadLogs(url: file) { _ in
                     fail("should not have been called")
                 }
             }
@@ -39,9 +44,11 @@ class NetworkTests: QuickSpec {
             it("calls the callback on any other response") {
                 http.testSession.statusCode = 201
                 waitUntil { done in
-                    network.uploadLogs(url: file) { success in
-                        expect(success).to(beTrue())
-                        done()
+                    Utils.safeIgnore {
+                        try network.uploadLogs(url: file) { success in
+                            expect(success).to(beTrue())
+                            done()
+                        }
                     }
                 }
             }
