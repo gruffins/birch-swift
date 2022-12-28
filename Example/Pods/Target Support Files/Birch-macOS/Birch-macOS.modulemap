@@ -1,0 +1,6 @@
+framework module Birch {
+  umbrella header "Birch-macOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

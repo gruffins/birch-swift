@@ -140,7 +140,7 @@ class UtilsTest: QuickSpec {
 
         describe("compress()") {
             it("compresses") {
-                if #available(iOS 13, *) {
+                if #available(iOS 13.0, tvOS 13.0, macOS 10.15, *) {
                     let data = "test".data(using: .utf8)!
                     expect(try Utils.compress(data: data)).notTo(beNil())
                 }

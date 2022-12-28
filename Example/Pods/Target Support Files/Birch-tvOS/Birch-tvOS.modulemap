@@ -1,0 +1,6 @@
+framework module Birch {
+  umbrella header "Birch-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,9 @@ on:
 
 jobs:
   specs:
+    strategy:
+      matrix:
+        platform: [ios, tvos, macos]
     name: Specs
     runs-on: macos-latest
     steps:
@@ -15,8 +18,8 @@ jobs:
         with:
           bundler-cache: true
       - name: Specs
-        run: bundle exec fastlane specs
+        run: bundle exec fastlane ${{ matrix.platform }} specs
       - uses: codecov/codecov-action@v3
         with:
           xcode: true
-          xcode_archive_path: fastlane/test_output/Birch-Unit-Tests.xcresult
+          xcode_archive_path: fastlane/test_output/Birch-${{ matrix.platform }}-Unit-Tests.xcresult

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol EngineProtocol {
     var source: Source { get }
