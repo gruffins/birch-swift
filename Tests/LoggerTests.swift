@@ -120,8 +120,7 @@ class LoggerTests: QuickSpec {
                     expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
                     waitUntil(timeout: .seconds(5)) { done in
                         if let contents = try? String(contentsOf: logger.current, encoding: .utf8), !contents.isEmpty {
-                            expect(contents).to(contain("em"))
-                            expect(contents).to(contain("ek"))
+                            expect(contents).notTo(contain("message"))
                             done()
                         }
                     }
