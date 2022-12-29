@@ -1,6 +1,10 @@
 default_platform :ios
 
 platform :ios do
+  lane :lint do
+    pod_lib_lint(skip_tests: true)
+  end
+
   lane :specs do
     scan(
       scheme: 'Birch-iOS-Unit-Tests',
@@ -14,7 +18,7 @@ platform :ios do
   lane :release do
     version = read_podspec['version']
 
-    pod_lib_lint
+    pod_lib_lint(skip_tests: true)
     pod_push(allow_warnings: true, verbose: true)
   end
 end
