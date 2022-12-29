@@ -14,8 +14,10 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: Lint
+      - name: Cocoapods Lint
         run: bundle exec fastlane lint
+      - name: Swift PM
+        run: swift package describe
   specs:
     strategy:
       matrix:
