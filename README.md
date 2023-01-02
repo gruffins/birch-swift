@@ -10,7 +10,7 @@
 [![codecov](https://codecov.io/gh/gruffins/birch-swift/branch/main/graph/badge.svg?token=EQB1TQO74C)](https://codecov.io/gh/gruffins/birch-swift)
 [![Platforms](https://img.shields.io/cocoapods/p/Birch.svg)](https://cocoapods.org/pods/Birch)
 
-Simple, lightweight remote logging for iOS.
+Simple, lightweight remote logging for Swift iOS / macOS / tvOS.
 
 Sign up for your free account at [Birch](https://birch.ryanfung.com).
 
