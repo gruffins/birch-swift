@@ -1,5 +1,9 @@
 # Changes
 
+1.4.0
+----------
+- Add multiplatform support.
+
 1.3.0
 ----------
 - Add zlib compression.
