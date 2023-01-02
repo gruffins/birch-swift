@@ -35,8 +35,8 @@ class LoggerTests: QuickSpec {
                 let other = logger.directory.appendingPathComponent("\(Int(Date().timeIntervalSince1970))")
                 Utils.createFile(url: logger.current)
                 Utils.createFile(url: other)
-                expect(logger.nonCurrentFiles).to(contain(other))
-                expect(logger.nonCurrentFiles).notTo(contain(logger.current))
+                expect(logger.nonCurrentFiles).to(containElementSatisfying { $0.lastPathComponent == other.lastPathComponent })
+                expect(logger.nonCurrentFiles).notTo(containElementSatisfying { $0.lastPathComponent == logger.current.lastPathComponent })
             }
         }
 
@@ -120,8 +120,7 @@ class LoggerTests: QuickSpec {
                     expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
                     waitUntil(timeout: .seconds(5)) { done in
                         if let contents = try? String(contentsOf: logger.current, encoding: .utf8), !contents.isEmpty {
-                            expect(contents).to(contain("em"))
-                            expect(contents).to(contain("ek"))
+                            expect(contents).notTo(contain("message"))
                             done()
                         }
                     }

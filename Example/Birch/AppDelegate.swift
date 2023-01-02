@@ -14,13 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Birch.initialize("api_key")
 
         let viewCtrl = ViewController()
         let navCtrl = UINavigationController(rootViewController: viewCtrl)
 
+        window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navCtrl
         window?.makeKeyAndVisible()
 

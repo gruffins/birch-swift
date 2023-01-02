@@ -78,7 +78,7 @@ class HTTP {
         var filename = "logs.txt"
         var compressed = file
 
-        if #available(iOS 13.0, macOS 10.14, watchOS 6.0, tvOS 13.0, *) {
+        if #available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *) {
             filename = "logs.txt.zlib"
             compressed = try Utils.compress(data: file)
         }

@@ -6,7 +6,22 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Cocoapods Lint
+        run: bundle exec fastlane lint
+      - name: Swift PM
+        run: swift package describe
   specs:
+    strategy:
+      matrix:
+        platform: [ios, tvos, macos]
     name: Specs
     runs-on: macos-latest
     steps:
@@ -15,8 +30,8 @@ jobs:
         with:
           bundler-cache: true
       - name: Specs
-        run: bundle exec fastlane specs
+        run: bundle exec fastlane ${{ matrix.platform }} specs
       - uses: codecov/codecov-action@v3
         with:
           xcode: true
-          xcode_archive_path: fastlane/test_output/Birch-Unit-Tests.xcresult
+          xcode_archive_path: fastlane/test_output/Birch-${{ matrix.platform }}-Unit-Tests.xcresult

@@ -1,6 +1,0 @@
-framework module Birch {
-  umbrella header "Birch-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -65,6 +65,34 @@ class SourceTests: QuickSpec {
             }
         }
 
+        describe("os") {
+            #if os(watchOS)
+            context("watchOS") {
+                it("returns watchOS") {
+                    expect(source.os).to(equal("watchOS"))
+                }
+            }
+            #elseif os(tvOS)
+            context("tvOS") {
+                it("returns tvOS") {
+                    expect(source.os).to(equal("tvOS"))
+                }
+            }
+            #elseif os(macOS)
+            context("macOS") {
+                it("returns macOS") {
+                    expect(source.os).to(equal("macOS"))
+                }
+            }
+            #else
+            context("iOS") {
+                it("returns iOS") {
+                    expect(source.os).to(equal("iOS"))
+                }
+            }
+            #endif
+        }
+
         describe("osVersion") {
             it("gets the os version") {
                 expect(source.osVersion).notTo(beEmpty())

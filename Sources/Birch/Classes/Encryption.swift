@@ -71,10 +71,10 @@ private extension Encryption {
     }
 
     static func encryptRSA(publicKey: SecKey, input: Data) -> String {
-        let buffer = input.bytes
-        var keySize = SecKeyGetBlockSize(publicKey)
-        var keyBuffer = [UInt8](repeating: 0, count: keySize)
-        _ = SecKeyEncrypt(publicKey, SecPadding.PKCS1, buffer, buffer.count, &keyBuffer, &keySize)
-        return Data(bytes: keyBuffer, count: keySize).base64EncodedString()
+        var encryptedData = Data()
+        if let data = SecKeyCreateEncryptedData(publicKey, .rsaEncryptionPKCS1, input as CFData, nil) as? Data {
+            encryptedData.append(contentsOf: data)
+        }
+        return encryptedData.base64EncodedString()
     }
 }

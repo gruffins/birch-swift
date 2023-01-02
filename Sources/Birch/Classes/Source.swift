@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 class Source {
 
@@ -20,7 +19,7 @@ class Source {
     let brand: String
     let manufacturer: String
     let model: String
-    let os: String = "iOS"
+    let os: String
     let osVersion: String
 
     var identifier: String? {
@@ -39,6 +38,8 @@ class Source {
 
     init(storage: Storage, eventBus: EventBus) {
         let meta = Bundle.main.infoDictionary
+        let processInfo = ProcessInfo()
+        let osv = processInfo.operatingSystemVersion
 
         self.storage = storage
         self.eventBus = eventBus
@@ -50,9 +51,19 @@ class Source {
         brand = "Apple"
         manufacturer = "Apple"
         model = Utils.getDeviceModel() ?? ""
-        osVersion = UIDevice.current.systemVersion
+        osVersion = "\(osv.majorVersion).\(osv.minorVersion).\(osv.patchVersion)"
 
         storage.uuid = uuid
+
+        #if os(watchOS)
+            os = "watchOS"
+        #elseif os(tvOS)
+            os = "tvOS"
+        #elseif os(macOS)
+            os = "macOS"
+        #else
+            os = "iOS"
+        #endif
     }
 
     func toJson() -> [String: String] {

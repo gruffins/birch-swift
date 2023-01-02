@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios lint
+
+```sh
+[bundle exec] fastlane ios lint
+```
+
+
+
 ### ios specs
 
 ```sh
@@ -27,6 +35,32 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ```sh
 [bundle exec] fastlane ios release
+```
+
+
+
+----
+
+
+## tvos
+
+### tvos specs
+
+```sh
+[bundle exec] fastlane tvos specs
+```
+
+
+
+----
+
+
+## macos
+
+### macos specs
+
+```sh
+[bundle exec] fastlane macos specs
 ```
 
 

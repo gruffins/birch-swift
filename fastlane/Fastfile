@@ -1,19 +1,48 @@
 default_platform :ios
 
 platform :ios do
+  lane :lint do
+    pod_lib_lint(skip_tests: true)
+  end
+
   lane :specs do
     scan(
-      scheme: 'Birch-Unit-Tests',
+      scheme: 'Birch-iOS-Unit-Tests',
       derived_data_path: 'DerivedData',
       code_coverage: true,
-      result_bundle: true
+      result_bundle: true,
+      destination: 'platform=iOS Simulator,name=iPhone 12 Pro,OS=latest'
     )
   end
 
   lane :release do
     version = read_podspec['version']
 
-    pod_lib_lint
+    pod_lib_lint(skip_tests: true)
     pod_push(allow_warnings: true, verbose: true)
+  end
+end
+
+platform :tvos do
+  lane :specs do
+    scan(
+      scheme: 'Birch-tvOS-Unit-Tests',
+      derived_data_path: 'DerivedData',
+      code_coverage: true,
+      result_bundle: true,
+      destination: 'platform=tvOS Simulator,name=Apple TV,OS=latest'
+    )
+  end
+end
+
+platform :macos do
+  lane :specs do
+    scan(
+      scheme: 'Birch-macOS-Unit-Tests',
+      derived_data_path: 'DerivedData',
+      code_coverage: true,
+      result_bundle: true,
+      destination: 'platform=macosx'
+    )
   end
 end
