@@ -98,7 +98,7 @@ class NetworkTests: QuickSpec {
                 http.testSession.responseBody = Utils.dictionaryToJson(
                     input: [
                         "source_configuration": [
-                            "log_level": Logger.Level.info.rawValue,
+                            "log_level": Level.info.rawValue,
                             "flush_period_seconds": 10
                         ]
                     ]

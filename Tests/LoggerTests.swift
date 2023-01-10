@@ -30,6 +30,7 @@ class LoggerTests: QuickSpec {
             Birch.debug = false
             Birch.console = false
             Birch.remote = true
+            Birch.level = nil
         }
 
         describe("nonCurrentFiles()") {
@@ -43,8 +44,8 @@ class LoggerTests: QuickSpec {
         }
 
         describe("log()") {
-            it("logs any level with debug") {
-                Birch.debug = true
+            it("logs if local level overridden") {
+                Birch.level = .trace
                 logger.level = .none
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
                 expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
@@ -62,12 +63,12 @@ class LoggerTests: QuickSpec {
                 expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
             }
 
-            describe("with debug") {
-                it("logs all levels") {
-                    Birch.debug = true
+            describe("with console") {
+                it("logs") {
+                    Birch.level = .trace
                     Birch.console = true
                     
-                    var calls: [Logger.Level: Bool] = [
+                    var calls: [Level: Bool] = [
                         .trace: false,
                         .debug: false,
                         .info: false,

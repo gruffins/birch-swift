@@ -65,6 +65,7 @@ public class Birch {
 
     public static var console: Bool = false
     public static var remote: Bool = true
+    public static var level: Level? = nil
 
     public static func initialize(
         _ apiKey: String,

@@ -12,10 +12,6 @@ class Logger {
         static let MAX_FILE_SIZE_BYTES = 1024 * 512
     }
 
-    enum Level: Int {
-        case trace = 0, debug, info, warn, error, none
-    }
-
     private let queue = DispatchQueue(label: "Birch-Logger")
     private var fileHandle: FileHandle?
 
@@ -46,7 +42,8 @@ class Logger {
     }
 
     func log(level: Level, block: @escaping () -> String, original: @escaping () -> String) {
-        if Utils.diskAvailable() && (level.rawValue >= self.level.rawValue || Birch.debug) {
+        let allowed = Birch.level ?? self.level
+        if Utils.diskAvailable() && (level.rawValue >= allowed.rawValue) {
             queue.async {
                 Utils.safeIgnore {
                     self.ensureCurrentFileExists()
