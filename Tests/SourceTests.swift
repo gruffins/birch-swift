@@ -120,7 +120,7 @@ class SourceTests: QuickSpec {
             }
 
             it("caches") {
-                let dict = source.toJson()
+                _ = source.toJson()
                 expect(source.toJson()).notTo(beNil())
             }
         }

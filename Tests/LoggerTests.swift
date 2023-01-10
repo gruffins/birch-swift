@@ -28,6 +28,8 @@ class LoggerTests: QuickSpec {
             }
 
             Birch.debug = false
+            Birch.console = false
+            Birch.remote = true
         }
 
         describe("nonCurrentFiles()") {
@@ -136,6 +138,17 @@ class LoggerTests: QuickSpec {
                     let contents = try String(contentsOf: logger.current, encoding: .utf8)
                     expect(contents).notTo(contain("em"))
                     expect(contents).notTo(contain("ek"))
+                }
+            }
+
+            context("with remote disabled") {
+                it("doesnt write to disk") {
+                    Birch.remote = false
+                    logger.level = .trace
+                    logger.log(level: .trace, block: { "message" }, original: { "message" })
+                    expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                    let contents = try String(contentsOf: logger.current, encoding: .utf8)
+                    expect(contents).to(beEmpty())
                 }
             }
         }
