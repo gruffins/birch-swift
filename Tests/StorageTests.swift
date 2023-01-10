@@ -45,7 +45,7 @@ class StorageTests: QuickSpec {
 
         describe("logLevel") {
             it("gets and sets") {
-                let logLevel = Logger.Level.warn
+                let logLevel = Level.warn
                 storage.logLevel = logLevel
                 expect(storage.logLevel).to(equal(logLevel))
             }

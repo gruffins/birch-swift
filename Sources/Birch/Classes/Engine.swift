@@ -11,7 +11,7 @@ protocol EngineProtocol {
     var source: Source { get }
 
     func start()
-    @discardableResult func log(level: Logger.Level, message: @escaping () -> String) -> Bool
+    @discardableResult func log(level: Level, message: @escaping () -> String) -> Bool
     @discardableResult func flush() -> Bool
     @discardableResult func updateSource(source: Source) -> Bool
     @discardableResult func syncConfiguration() -> Bool
@@ -115,7 +115,7 @@ class Engine: EngineProtocol {
         }
     }
 
-    @discardableResult func log(level: Logger.Level, message: @escaping () -> String) -> Bool {
+    @discardableResult func log(level: Level, message: @escaping () -> String) -> Bool {
         guard !Birch.optOut else { return false }
 
         let timestamp = Utils.dateFormatter.string(from: Date())
@@ -181,11 +181,11 @@ class Engine: EngineProtocol {
 
         queue.async {
             self.network.getConfiguration(source: self.source) { json in
-                let level = Logger.Level(rawValue: (json["log_level"] as? Int) ?? Logger.Level.error.rawValue)
+                let level = Level(rawValue: (json["log_level"] as? Int) ?? Level.error.rawValue)
                 let period = (json["flush_period_seconds"] as? Int) ?? Constants.FLUSH_PERIOD_SECONDS
 
-                self.storage.logLevel = level ?? Logger.Level.error
-                self.logger.level = level ?? Logger.Level.error
+                self.storage.logLevel = level ?? Level.error
+                self.logger.level = level ?? Level.error
                 self.storage.flushPeriod = period
 
                 self.flushPeriod = period

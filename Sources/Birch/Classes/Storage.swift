@@ -37,10 +37,10 @@ class Storage {
         }
     }
 
-    var logLevel: Logger.Level {
+    var logLevel: Level {
         get {
             if let level = defaults?.integer(forKey: "log_level") {
-                return Logger.Level(rawValue: level) ?? .error
+                return Level(rawValue: level) ?? .error
             }
             return .error
         }

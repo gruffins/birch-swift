@@ -26,7 +26,7 @@ class BirchTests: QuickSpec {
             startCalled = true
         }
 
-        func log(level: Logger.Level, message: @escaping () -> String) -> Bool {
+        func log(level: Level, message: @escaping () -> String) -> Bool {
             _ = message()
             logCalled = true
             return true
