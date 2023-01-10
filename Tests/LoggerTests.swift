@@ -63,6 +63,7 @@ class LoggerTests: QuickSpec {
             describe("with debug") {
                 it("logs all levels") {
                     Birch.debug = true
+                    Birch.console = true
                     
                     var calls: [Logger.Level: Bool] = [
                         .trace: false,
