@@ -22,9 +22,12 @@ class Source {
     let os: String
     let osVersion: String
 
+    private var cache: [String: String]? = nil
+
     var identifier: String? {
         didSet {
             storage.identifier = identifier
+            cache = nil
             eventBus.publish(event: .sourceUpdate(self))
         }
     }
@@ -32,6 +35,7 @@ class Source {
     var customProperties: [String: String]? {
         didSet {
             storage.customProperties = customProperties
+            cache = nil
             eventBus.publish(event: .sourceUpdate(self))
         }
     }
@@ -67,24 +71,30 @@ class Source {
     }
 
     func toJson() -> [String: String] {
-        var json: [String: String] = [
-            "uuid": uuid,
-            "package_name": packageName,
-            "app_version": appVersion,
-            "app_build_number": appBuildNumber,
-            "brand": brand,
-            "manufacturer": manufacturer,
-            "model": model,
-            "os": os,
-            "os_version": osVersion,
-            "identifier": identifier ?? ""
-        ]
+        if let cache = cache {
+            return cache
+        } else {
+            var json: [String: String] = [
+                "uuid": uuid,
+                "package_name": packageName,
+                "app_version": appVersion,
+                "app_build_number": appBuildNumber,
+                "brand": brand,
+                "manufacturer": manufacturer,
+                "model": model,
+                "os": os,
+                "os_version": osVersion,
+                "identifier": identifier ?? ""
+            ]
 
-        if let customProperties = customProperties {
-            customProperties.forEach { info in
-                json["custom_property__\(info.key)"] = info.value
+            if let customProperties = customProperties {
+                customProperties.forEach { info in
+                    json["custom_property__\(info.key)"] = info.value
+                }
             }
+
+            cache = json
+            return json
         }
-        return json
     }
 }

@@ -118,6 +118,11 @@ class SourceTests: QuickSpec {
                 let dict = source.toJson()
                 expect(dict["custom_property__key"]).to(equal("value"))
             }
+
+            it("caches") {
+                let dict = source.toJson()
+                expect(source.toJson()).notTo(beNil())
+            }
         }
     }
 }
