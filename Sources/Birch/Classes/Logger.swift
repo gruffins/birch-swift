@@ -72,7 +72,7 @@ class Logger {
                         message = block()
                     }
 
-                    if let data = "\(message),\n".data(using: .utf8) {
+                    if Birch.remote, let data = "\(message),\n".data(using: .utf8) {
                         self.fileHandle?.write(data)
 
                         if #available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *) {
