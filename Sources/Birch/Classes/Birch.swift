@@ -63,6 +63,8 @@ public class Birch {
         }
     }
 
+    public static var console: Bool = false
+
     public static func initialize(
         _ apiKey: String,
         publicKey: String? = nil,

@@ -82,7 +82,7 @@ class Logger {
                         }
                     }
 
-                    if Birch.debug {
+                    if Birch.console {
                         let timestamp = Utils.dateFormatter.string(from: Date())
 
                         switch level {
