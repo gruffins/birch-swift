@@ -31,6 +31,7 @@ class LoggerTests: QuickSpec {
             Birch.console = false
             Birch.remote = true
             Birch.level = nil
+            Birch.synchronous = false
         }
 
         describe("nonCurrentFiles()") {
@@ -44,23 +45,27 @@ class LoggerTests: QuickSpec {
         }
 
         describe("log()") {
+            beforeEach {
+                Birch.synchronous = true
+            }
+
             it("logs if local level overridden") {
                 Birch.level = .trace
                 logger.level = .none
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
-                expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                expect(Utils.fileExists(url: logger.current)).to(beTrue())
             }
 
             it("skips logs lower than the current level") {
                 logger.level = .none
                 logger.log(level: .trace, block: { "message" }, original: { "message "})
-                expect(Utils.fileExists(url: logger.current)).toEventually(beFalse())
+                expect(Utils.fileExists(url: logger.current)).to(beFalse())
             }
 
             it("doesnt skip logs higher than the current level") {
                 logger.level = .trace
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
-                expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                expect(Utils.fileExists(url: logger.current)).to(beTrue())
             }
 
             describe("with console") {
@@ -100,11 +105,11 @@ class LoggerTests: QuickSpec {
                     }
                     logger.log(level: .none, block: block, original: block)
 
-                    expect(calls[.trace]).toEventually(beTrue())
-                    expect(calls[.debug]).toEventually(beTrue())
-                    expect(calls[.info]).toEventually(beTrue())
-                    expect(calls[.warn]).toEventually(beTrue())
-                    expect(calls[.error]).toEventually(beTrue())
+                    expect(calls[.trace]).to(beTrue())
+                    expect(calls[.debug]).to(beTrue())
+                    expect(calls[.info]).to(beTrue())
+                    expect(calls[.warn]).to(beTrue())
+                    expect(calls[.error]).to(beTrue())
                 }
             }
 
@@ -121,7 +126,7 @@ class LoggerTests: QuickSpec {
                     Utils.deleteFile(url: logger.current)
                     logger.level = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
-                    expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                    expect(Utils.fileExists(url: logger.current)).to(beTrue())
                     waitUntil(timeout: .seconds(5)) { done in
                         if let contents = try? String(contentsOf: logger.current, encoding: .utf8), !contents.isEmpty {
                             expect(contents).notTo(contain("message"))
@@ -147,9 +152,18 @@ class LoggerTests: QuickSpec {
                     Birch.remote = false
                     logger.level = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
-                    expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
+                    expect(Utils.fileExists(url: logger.current)).to(beTrue())
                     let contents = try String(contentsOf: logger.current, encoding: .utf8)
                     expect(contents).to(beEmpty())
+                }
+            }
+
+            context("synchronously") {
+                it("logs") {
+                    Birch.synchronous = true
+                    logger.level = .trace
+                    logger.log(level: .trace, block: { "message" }, original: { "message" })
+                    expect(Utils.fileExists(url: logger.current)).to(beTrue())
                 }
             }
         }
@@ -158,7 +172,7 @@ class LoggerTests: QuickSpec {
             it("moves the current file to another file") {
                 Utils.createFile(url: logger.current)
                 logger.rollFile()
-                expect(logger.nonCurrentFiles).toEventuallyNot(beEmpty())
+                expect(logger.nonCurrentFiles).notTo(beEmpty())
             }
         }
     }

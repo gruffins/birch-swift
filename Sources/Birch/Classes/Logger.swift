@@ -44,7 +44,7 @@ class Logger {
     func log(level: Level, block: @escaping () -> String, original: @escaping () -> String) {
         let allowed = Birch.level ?? self.level
         if Utils.diskAvailable() && (level.rawValue >= allowed.rawValue) {
-            queue.async {
+            let job = {
                 Utils.safeIgnore {
                     self.ensureCurrentFileExists()
 
@@ -103,6 +103,12 @@ class Logger {
                     }
                 }
             }
+
+            if Birch.synchronous {
+                queue.sync(execute: job)
+            } else {
+                queue.async(execute: job)
+            }
         }
     }
 
@@ -113,10 +119,6 @@ class Logger {
 
                 let timestamp = Int(Date().timeIntervalSince1970 * 1000)
                 let rollTo = self.directory.appendingPathComponent("\(timestamp)")
-
-                if Birch.debug {
-                    Birch.d { "[Birch] Rolled file to \(rollTo.lastPathComponent)." }
-                }
 
                 if #available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *) {
                     try self.fileHandle?.close()

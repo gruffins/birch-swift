@@ -148,13 +148,16 @@ class Engine: EngineProtocol {
                 .sorted(by: { l, r in l.path > r.path})
                 .forEach { url in
                     if Utils.fileSize(url: url) == 0 {
+                        if Birch.debug {
+                            Birch.d { "[Birch] Empty file \(url.lastPathComponent)."}
+                        }
                         Utils.deleteFile(url: url)
                     } else {
                         Utils.safeIgnore {
                             try self.network.uploadLogs(url: url) { success in
                                 if success {
                                     if Birch.debug {
-                                        Birch.d { "[Birch] Removing file \(url.lastPathComponent)" }
+                                        Birch.d { "[Birch] Removing file \(url.lastPathComponent)." }
                                     }
 
                                     Utils.deleteFile(url: url)

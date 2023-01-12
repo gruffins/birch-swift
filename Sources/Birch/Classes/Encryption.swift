@@ -41,7 +41,7 @@ class Encryption {
         do {
             let iv: Data = Encryption.secureRandomData(length: Constants.IV_SIZE)
 
-            if let aes = aes {
+            if let aes {
                 aes.iv = iv.bytes
             } else {
                 aes = try AES(key: symmetricKey, iv: iv)
