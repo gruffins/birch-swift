@@ -102,7 +102,7 @@ public class Birch {
         if engine == nil {
             var encryption: Encryption?
 
-            if let publicKey = publicKey, let enc = Encryption.create(publicKey: publicKey) {
+            if let publicKey, let enc = Encryption.create(publicKey: publicKey) {
                 encryption = enc
             }
 

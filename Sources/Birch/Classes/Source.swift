@@ -71,7 +71,7 @@ class Source {
     }
 
     func toJson() -> [String: String] {
-        if let cache = cache {
+        if let cache {
             return cache
         } else {
             var json: [String: String] = [
@@ -87,7 +87,7 @@ class Source {
                 "identifier": identifier ?? ""
             ]
 
-            if let customProperties = customProperties {
+            if let customProperties {
                 customProperties.forEach { info in
                     json["custom_property__\(info.key)"] = info.value
                 }

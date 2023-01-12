@@ -43,7 +43,7 @@ class HTTP {
         let request = createRequest(method: "GET", url: url, headers: headers)
         let semaphore = DispatchSemaphore(value: 0)
         session.dataTask(with: request) { data, response, _ in
-            if let response = response as? HTTPURLResponse, let data = data, let body = String(data: data, encoding: .utf8) {
+            if let response = response as? HTTPURLResponse, let data, let body = String(data: data, encoding: .utf8) {
                 onResponse(Response(statusCode: response.statusCode, body: body))
             }
             semaphore.signal()
@@ -61,7 +61,7 @@ class HTTP {
         request.httpBody = body.data(using: .utf8)
         let semaphore = DispatchSemaphore(value: 0)
         session.dataTask(with: request) { data, response, _ in
-            if let response = response as? HTTPURLResponse, let data = data, let body = String(data: data, encoding: .utf8) {
+            if let response = response as? HTTPURLResponse, let data, let body = String(data: data, encoding: .utf8) {
                 onResponse(Response(statusCode: response.statusCode, body: body))
             }
             semaphore.signal()
@@ -93,7 +93,7 @@ class HTTP {
         body.append("--\(boundary)--\(Constants.LINE)".data(using: .utf8)!)
         let semaphore = DispatchSemaphore(value: 0)
         session.uploadTask(with: request, from: body) { data, response, _ in
-            if let response = response as? HTTPURLResponse, let data = data, let body = String(data: data, encoding: .utf8) {
+            if let response = response as? HTTPURLResponse, let data, let body = String(data: data, encoding: .utf8) {
                 onResponse(Response(statusCode: response.statusCode, body: body))
             }
             semaphore.signal()
