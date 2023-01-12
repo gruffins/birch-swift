@@ -11,6 +11,8 @@ public class Birch {
     static var engine: EngineProtocol?
     static var flushPeriod: Int?
 
+    /// Sets the logger in debug mode. This will log Birch operations and flush logs every 30 seconds.
+    /// This should be FALSE in production builds otherwise you will not be able to modify settings remotely.
     public static var debug: Bool = false {
         didSet {
             if debug {
@@ -22,8 +24,10 @@ public class Birch {
         }
     }
 
+    /// Sets the logger to opt out. This disables log collection and device synchronization.
     public static var optOut: Bool = false
 
+    /// Override the default host that should be used. This should be called prior to initiializing the logger.
     public static var host: String? {
         get {
             return Network.Constants.HOST
@@ -41,10 +45,13 @@ public class Birch {
         }
     }
 
+    /// The assigned UUID this source has been given. The UUID remains stable for the install, it does
+    /// not persist across installs.
     public static var uuid: String? {
         return engine?.source.uuid
     }
 
+    /// An identifer such as a `user_id` that can be used on the Birch dashboard to locate the device.
     public static var identifier: String? {
         get {
             return engine?.source.identifier
@@ -54,6 +61,7 @@ public class Birch {
         }
     }
 
+    /// Additional properties of the source that should be appended to each log.
     public static var customProperties: [String: String] {
         get {
             return engine?.source.customProperties ?? [:]
@@ -63,10 +71,26 @@ public class Birch {
         }
     }
 
+    /// Set whether logging to console should be enabled. Defaults to FALSE. This should be FALSE in a production build since you cannot read logcat remotely anyways.
     public static var console: Bool = false
+
+    /// Set whether remote logging is enabled. Defaults to TRUE. This should be TRUE in a production build so your logs are delivered to Birch.
     public static var remote: Bool = true
+
+    /// Override the level set by the server. Defaults to NULL. This should be NULL in a production build so you can remotely adjust the log level.
     public static var level: Level? = nil
 
+    /// Whether to log synchronously or asynchronously. Defaults to FALSE. This should be FALSE in a production build.
+    public static var synchronous: Bool = false
+
+    /**
+     Initializes the logger  with the given parameters.
+
+     - Parameters:
+        - apiKey: Your api key.
+        - publicKey: Your base64 encoded RSA public key.
+        - scrubbers: An array of scrubbers to be used to sanitize logs.
+     */
     public static func initialize(
         _ apiKey: String,
         publicKey: String? = nil,
@@ -100,6 +124,7 @@ public class Birch {
         }
     }
 
+    /// Flushes logs to the server.
     public static func flush() {
         engine?.flush()
     }
