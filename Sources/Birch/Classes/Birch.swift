@@ -27,7 +27,7 @@ public class Birch {
     /// Sets the logger to opt out. This disables log collection and device synchronization.
     public static var optOut: Bool = false
 
-    /// Override the default host that should be used. This should be called prior to initiializing the logger.
+    /// Override the default host that should be used. This should be called prior to initializing the logger.
     public static var host: String? {
         get {
             return Network.Constants.HOST
