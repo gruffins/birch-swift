@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name = 'Birch'
-  s.version = '1.4.0'
+  s.version = '1.5.0'
   s.summary = 'Remote logger for the Birch platform.'
   s.homepage = 'https://github.com/gruffins/birch-swift'
   s.license = { type: 'MIT', file: 'LICENSE' }
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.0'
   s.tvos.deployment_target = '11.0'
   s.osx.deployment_target = '10.13'
-  s.swift_version = '5.0'
+  s.swift_version = '5.7'
   s.source_files = 'Sources/Birch/Classes/**/*'
 
   s.test_spec 'Tests' do |ts|

@@ -2681,62 +2681,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0A82834ADD95A0040EC0A171D651B91D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27C728ABA81D50DBC0DFABC7D0DDD3E3 /* Birch-iOS.debug.xcconfig */;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Birch-iOS/Birch-iOS.modulemap";
-				PRODUCT_MODULE_NAME = Birch;
-				PRODUCT_NAME = Birch;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		1BE177FC6C63775F0A924F773FB3C741 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB676DB3A13FC7E8EAB29CEC26F15E00 /* Birch-iOS.unit-tests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGNING_ALLOWED = YES;
-				CODE_SIGNING_REQUIRED = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "Birch-iOS-Unit-Tests";
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		1BE8E7A5DD60B2C85367B5D1449B1689 /* Release */ = {
+		1685EC79D9C81C39FA25F9053B3E0079 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 85F4FF9D81889587E43703933552252F /* Birch-macOS.release.xcconfig */;
 			buildSettings = {
@@ -2762,15 +2707,15 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.7;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		1EA0F69F193FF933424673293C9A0DE9 /* Release */ = {
+		185FFABD82F914C05C2DDD2005730FF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD76B69FF4C8B78B6781E1B5B3549990 /* Birch-macOS.unit-tests.release.xcconfig */;
+			baseConfigurationReference = E852527228782A79EBE3703DBEA56ABB /* Birch-macOS.unit-tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
@@ -2785,9 +2730,41 @@
 				PRODUCT_NAME = "Birch-macOS-Unit-Tests";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.7;
 			};
-			name = Release;
+			name = Debug;
+		};
+		1F4F4BA375EB68E45526B02662F3FB92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D39727F02A286417F3ADEAC234714006 /* Birch-macOS.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-macOS/Birch-macOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-macOS/Birch-macOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MODULEMAP_FILE = "Target Support Files/Birch-macOS/Birch-macOS.modulemap";
+				PRODUCT_MODULE_NAME = Birch;
+				PRODUCT_NAME = Birch;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		1FFD71DEEF1542FABF97490DC6E536FF /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -2892,12 +2869,31 @@
 			};
 			name = Debug;
 		};
-		262D1113004CFF81A7CF7C8F2064B81D /* Release */ = {
+		27F2FB0898E5642192D6E5EEE08F6E4B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0298298E8C61CC0A820CADBFDB52DCAB /* Birch-iOS.release.xcconfig */;
+			baseConfigurationReference = 27CDA564B177CC968B674E36D5B45021 /* Birch-tvOS.unit-tests.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-Info.plist";
+				PRODUCT_NAME = "Birch-tvOS-Unit-Tests";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		32E8017BA13FF519B6ED6348DF1C73C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 986E08944CE494A5AB72B55BDB2C1AB2 /* Birch-tvOS.release.xcconfig */;
+			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -2906,45 +2902,24 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Birch-iOS/Birch-iOS.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS.modulemap";
 				PRODUCT_MODULE_NAME = Birch;
 				PRODUCT_NAME = Birch;
-				SDKROOT = iphoneos;
+				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		3468C0E3255BF2BEA99A6E7FF02F92F8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E852527228782A79EBE3703DBEA56ABB /* Birch-macOS.unit-tests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-macOS/Birch-macOS-Unit-Tests-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-macOS/Birch-macOS-Unit-Tests-Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				PRODUCT_NAME = "Birch-macOS-Unit-Tests";
-				SDKROOT = macosx;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
 		};
 		393C1139908D09F31EA163CEDEF08BEB /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3004,6 +2979,27 @@
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		3C5C64AD7B16F7E142FB62CF78ECE8E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DD76B69FF4C8B78B6781E1B5B3549990 /* Birch-macOS.unit-tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-macOS/Birch-macOS-Unit-Tests-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-macOS/Birch-macOS-Unit-Tests-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_NAME = "Birch-macOS-Unit-Tests";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
 			};
 			name = Release;
 		};
@@ -3068,6 +3064,29 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		5E37786AD2846BCA92F10ED39BB3DFD1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB676DB3A13FC7E8EAB29CEC26F15E00 /* Birch-iOS.unit-tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "Birch-iOS-Unit-Tests";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+			};
+			name = Debug;
 		};
 		63C2A2816F2B46322612F551796B7109 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3226,29 +3245,25 @@
 			};
 			name = Debug;
 		};
-		9C5CAFFE38E3AB6276674A94D44B7B00 /* Release */ = {
+		989C1A031EBA090892EB37EC76807ED8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 263097E3070CFB9923A78D74E13690BD /* Birch-iOS.unit-tests.release.xcconfig */;
+			baseConfigurationReference = 5289FCAF05622846D31F278F3C65CE09 /* Birch-tvOS.unit-tests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGNING_ALLOWED = YES;
 				CODE_SIGNING_REQUIRED = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_NAME = "Birch-iOS-Unit-Tests";
-				SDKROOT = iphoneos;
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-Info.plist";
+				PRODUCT_NAME = "Birch-tvOS-Unit-Tests";
+				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				VALIDATE_PRODUCT = YES;
+				SWIFT_VERSION = 5.7;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
-			name = Release;
+			name = Debug;
 		};
 		9ED6A7E4A436932AB9C30C18415F3CE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3280,27 +3295,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
-		};
-		A23D6CF0FAA080485119C25D29BC8D17 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27CDA564B177CC968B674E36D5B45021 /* Birch-tvOS.unit-tests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGNING_ALLOWED = YES;
-				CODE_SIGNING_REQUIRED = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-Info.plist";
-				PRODUCT_NAME = "Birch-tvOS-Unit-Tests";
-				SDKROOT = appletvos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
 		};
 		A2ECF81D9BCBBE0E16FF2993F76A9070 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3389,6 +3383,69 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AD0C1E01565DFBAF8B59616E6031EB7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0298298E8C61CC0A820CADBFDB52DCAB /* Birch-iOS.release.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Birch-iOS/Birch-iOS.modulemap";
+				PRODUCT_MODULE_NAME = Birch;
+				PRODUCT_NAME = Birch;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B1557571DE744EB91ED74B62EE89530C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 418740B36C331472C43DF2EACD218775 /* Birch-tvOS.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS.modulemap";
+				PRODUCT_MODULE_NAME = Birch;
+				PRODUCT_NAME = Birch;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3490,26 +3547,6 @@
 			};
 			name = Release;
 		};
-		BA8832A96EC0719289E4A5D3EC236AC1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5289FCAF05622846D31F278F3C65CE09 /* Birch-tvOS.unit-tests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGNING_ALLOWED = YES;
-				CODE_SIGNING_REQUIRED = YES;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Unit-Tests-Info.plist";
-				PRODUCT_NAME = "Birch-tvOS-Unit-Tests";
-				SDKROOT = appletvos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
-			};
-			name = Debug;
-		};
 		BCBE8837A10EF89F69954E81A36FD185 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D656E1FE8B2D909FCE4F1EB8132D4476 /* Nimble-macOS.release.xcconfig */;
@@ -3541,98 +3578,29 @@
 			};
 			name = Release;
 		};
-		C075E3AFFF2125D6DF60D1A7F1BD8F6E /* Release */ = {
+		D7EFF6F37E8932A6C4B990096940CDBE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 986E08944CE494A5AB72B55BDB2C1AB2 /* Birch-tvOS.release.xcconfig */;
+			baseConfigurationReference = 263097E3070CFB9923A78D74E13690BD /* Birch-iOS.unit-tests.release.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS.modulemap";
-				PRODUCT_MODULE_NAME = Birch;
-				PRODUCT_NAME = Birch;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		C75C0F48228E31C9C8AF323C14A0C9BA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 418740B36C331472C43DF2EACD218775 /* Birch-tvOS.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-tvOS/Birch-tvOS-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Birch-tvOS/Birch-tvOS.modulemap";
-				PRODUCT_MODULE_NAME = Birch;
-				PRODUCT_NAME = Birch;
-				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 11.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		DC9497CABC606BFA819B85A2DFD3AAB8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D39727F02A286417F3ADEAC234714006 /* Birch-macOS.debug.xcconfig */;
-			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Birch-macOS/Birch-macOS-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Birch-macOS/Birch-macOS-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MODULEMAP_FILE = "Target Support Files/Birch-macOS/Birch-macOS.modulemap";
-				PRODUCT_MODULE_NAME = Birch;
-				PRODUCT_NAME = Birch;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Unit-Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "Birch-iOS-Unit-Tests";
+				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
+				SWIFT_VERSION = 5.7;
+				VALIDATE_PRODUCT = YES;
 			};
-			name = Debug;
+			name = Release;
 		};
 		E64DF71ADE27A408B7FB962C3EBDFE0D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3762,14 +3730,46 @@
 			};
 			name = Debug;
 		};
+		FC45EA85417576481519E3F7CF86C263 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27C728ABA81D50DBC0DFABC7D0DDD3E3 /* Birch-iOS.debug.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Birch-iOS/Birch-iOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Birch-iOS/Birch-iOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Birch-iOS/Birch-iOS.modulemap";
+				PRODUCT_MODULE_NAME = Birch;
+				PRODUCT_NAME = Birch;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		2068DF71DDF29FC3EA3FB9A32A4BD378 /* Build configuration list for PBXNativeTarget "Birch-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0A82834ADD95A0040EC0A171D651B91D /* Debug */,
-				262D1113004CFF81A7CF7C8F2064B81D /* Release */,
+				FC45EA85417576481519E3F7CF86C263 /* Debug */,
+				AD0C1E01565DFBAF8B59616E6031EB7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3795,8 +3795,8 @@
 		4499EB8874780BBB0AB29A50B2E12CA4 /* Build configuration list for PBXNativeTarget "Birch-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DC9497CABC606BFA819B85A2DFD3AAB8 /* Debug */,
-				1BE8E7A5DD60B2C85367B5D1449B1689 /* Release */,
+				1F4F4BA375EB68E45526B02662F3FB92 /* Debug */,
+				1685EC79D9C81C39FA25F9053B3E0079 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3813,8 +3813,8 @@
 		537CCBDD6F49BD76F6B6F2C345610AD3 /* Build configuration list for PBXNativeTarget "Birch-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C75C0F48228E31C9C8AF323C14A0C9BA /* Debug */,
-				C075E3AFFF2125D6DF60D1A7F1BD8F6E /* Release */,
+				B1557571DE744EB91ED74B62EE89530C /* Debug */,
+				32E8017BA13FF519B6ED6348DF1C73C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3840,8 +3840,8 @@
 		832718FE34BE0B5B8B4FA43023A02A6E /* Build configuration list for PBXNativeTarget "Birch-tvOS-Unit-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BA8832A96EC0719289E4A5D3EC236AC1 /* Debug */,
-				A23D6CF0FAA080485119C25D29BC8D17 /* Release */,
+				989C1A031EBA090892EB37EC76807ED8 /* Debug */,
+				27F2FB0898E5642192D6E5EEE08F6E4B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3876,8 +3876,8 @@
 		97EE02586CABF88193A5705803DB08A1 /* Build configuration list for PBXNativeTarget "Birch-iOS-Unit-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1BE177FC6C63775F0A924F773FB3C741 /* Debug */,
-				9C5CAFFE38E3AB6276674A94D44B7B00 /* Release */,
+				5E37786AD2846BCA92F10ED39BB3DFD1 /* Debug */,
+				D7EFF6F37E8932A6C4B990096940CDBE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3885,8 +3885,8 @@
 		AA673ECABA7751E937F774B672FB3F65 /* Build configuration list for PBXNativeTarget "Birch-macOS-Unit-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3468C0E3255BF2BEA99A6E7FF02F92F8 /* Debug */,
-				1EA0F69F193FF933424673293C9A0DE9 /* Release */,
+				185FFABD82F914C05C2DDD2005730FF8 /* Debug */,
+				3C5C64AD7B16F7E142FB62CF78ECE8E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

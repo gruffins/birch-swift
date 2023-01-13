@@ -56,10 +56,17 @@ import Birch
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        Birch.initialize("YOUR_API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY")
-        Birch.debug = true // this should be turned off in a production build. Debug mode allows you to see Birch operating and artificially lowers the log level and flush period.
+    #if DEBUG
+      Birch.console = true // This enables logging to the console. The default is false.
+      Birch.remote = false // This disables remote logging if it's a debug build. The default is true.
+      Birch.level = Level.TRACE // This overrides the server configuration during local development. The default is null.
+      Birch.synchronous = true // This makes the logger log synchronously. The default is false.
+    #endif
 
-        return true
+    // Birch.debug = true // This line MUST be removed after you've successfully integrated. It is only used to help you debug the integration if you're having issues.
+    Birch.initialize("YOUR_API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY")
+
+    return true
     }
 }
 ```
@@ -96,15 +103,35 @@ If the current log level is `INFO`, the log will not get constructed.
 # Configuration
 Device level configuration is left to the server so you can remotely control it. There are a few things you can control on the client side.
 
-### Debugging
-Debug mode will lower the log level to `TRACE` and set the upload period to every 30 seconds. You should turn this __OFF__ in a production build otherwise you will not be able to modify the log settings remotely.
+### Console
+During local development, it is useful to see the logs in the console. These console logs are not useful in production since you cannot read them remotely. The default is `false`.
+```kotlin
+Birch.console = true
+```
+
+### Remote
+During local development, it's unlikely that you'll need remote logging. You can optionally turn it off to minimize your usage on Birch. The default is `true`.
+```swift
+Birch.remote = false
+```
+
+### Level
+During local development, you may want to quickly override the server configuration. The default is `null` which allows the server to set the remote level. Setting a value will **ALWAYS** override the server and prevent you from being able to remotely adjust the level.
+```swift
+Birch.level = .trace
+```
+
+### Synchronous
+During local development, you may want logs to print immediately when you're stepping through with a debugger. To do this, you'll need to use synchronous logging. The default value is `false`. Synchronous logging is slower since it has to perform the logging inline.
+```swift
+Birch.synchronous = true
+```
+
+### Debug
+When integrating the library, you may be curious to see the logger at work. By setting debug to true, Birch will log its operations and also flush logs every 30 seconds. The default value is `false`. You should **NOT** set this to true in a production build otherwise you will not be able to set the flush period remotely.
 ```swift
 Birch.debug = true
 ```
-
-### Default Configuration
-
-The default configuration is `ERROR` and log flushing every hour. This means any logs lower than `ERROR` are skipped and logs will only be delivered once an hour to preserve battery life. You can change these settings on a per source level by visiting your Birch dashboard.
 
 ### Encryption
 
