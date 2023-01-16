@@ -25,6 +25,7 @@ Birch can drain to
 - Papertrail
 - Logz
 - CloudWatch
+- S3
 - A custom webhook
 
 # Installation
