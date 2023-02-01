@@ -14,6 +14,7 @@ class Logger {
 
     private let queue = DispatchQueue(label: "Birch-Logger")
     private var fileHandle: FileHandle?
+    private let agent: Agent
 
     let encryption: Encryption?
     let directory: URL
@@ -30,10 +31,14 @@ class Logger {
         }
     }
 
-    init(encryption: Encryption?) {
+    init(
+        agent: Agent,
+        encryption: Encryption?
+    ) {
+        self.agent = agent
         self.encryption = encryption
 
-        directory = FileManager.default.temporaryDirectory.appendingPathComponent("birch")
+        directory = FileManager.default.temporaryDirectory.appendingPathComponent(agent.directory)
         current = directory.appendingPathComponent("current")
 
         Utils.safeIgnore {
@@ -42,8 +47,8 @@ class Logger {
     }
 
     func log(level: Level, block: @escaping () -> String, original: @escaping () -> String) {
-        let allowed = Birch.level ?? self.level
-        if Utils.diskAvailable() && (level.rawValue >= allowed.rawValue) {
+        let currentLevel = agent.level ?? self.level
+        if Utils.diskAvailable() && level.rawValue >= currentLevel.rawValue {
             let job = {
                 Utils.safeIgnore {
                     self.ensureCurrentFileExists()
@@ -69,7 +74,7 @@ class Logger {
                         message = block()
                     }
 
-                    if Birch.remote, let data = "\(message),\n".data(using: .utf8) {
+                    if self.agent.remote, let data = "\(message),\n".data(using: .utf8) {
                         self.fileHandle?.write(data)
 
                         if #available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *) {
@@ -79,7 +84,7 @@ class Logger {
                         }
                     }
 
-                    if Birch.console {
+                    if self.agent.console {
                         let timestamp = Utils.dateFormatter.string(from: Date())
 
                         switch level {
@@ -104,11 +109,14 @@ class Logger {
                 }
             }
 
-            if Birch.synchronous {
+            if agent.synchronous {
                 queue.sync(execute: job)
             } else {
                 queue.async(execute: job)
             }
+        } else if agent.debug && agent.console {
+            let timestamp = Utils.dateFormatter.string(from: Date())
+            print("\(timestamp) DEBUG Dropped log. level=\(level) currentLevel=\(currentLevel)")
         }
     }
 

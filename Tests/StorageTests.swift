@@ -16,7 +16,7 @@ class StorageTests: QuickSpec {
         var storage: Storage!
 
         beforeEach {
-            storage = Storage()
+            storage = Storage(directory: "birch", defaultLevel: .error)
         }
 
         describe("uuid") {

@@ -19,7 +19,7 @@ class SourceTests: QuickSpec {
 
         beforeEach {
             eventBus = EventBus()
-            storage = Storage()
+            storage = Storage(directory: "birch", defaultLevel: .error)
             source = Source(storage: storage, eventBus: eventBus)
         }
 

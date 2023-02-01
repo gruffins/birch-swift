@@ -8,165 +8,136 @@
 import Foundation
 
 public class Birch {
-    static var engine: EngineProtocol?
-    static var flushPeriod: Int?
+    static var agent: Agent = Agent(directory: "birch")
 
-    /// Sets the logger in debug mode. This will log Birch operations and flush logs every 30 seconds.
-    /// This should be FALSE in production builds otherwise you will not be able to modify settings remotely.
-    public static var debug: Bool = false {
-        didSet {
-            if debug {
-                flushPeriod = 30
-            } else {
-                flushPeriod = nil
-            }
-            engine?.syncConfiguration()
-        }
-    }
-
-    /// Sets the logger to opt out. This disables log collection and device synchronization.
-    public static var optOut: Bool = false
-
-    /// Override the default host that should be used. This should be called prior to initializing the logger.
-    public static var host: String? {
+    static public var debug: Bool {
         get {
-            return Network.Constants.HOST
+            agent.debug
         }
         set {
-            if let host = newValue {
-                if host.isEmpty {
-                    Network.Constants.HOST = Network.Constants.DEFAULT_HOST
-                } else {
-                    Network.Constants.HOST = host
-                }
-            } else {
-                Network.Constants.HOST = Network.Constants.DEFAULT_HOST
-            }
+            agent.debug = newValue
         }
     }
 
-    /// The assigned UUID this source has been given. The UUID remains stable for the install, it does
-    /// not persist across installs.
-    public static var uuid: String? {
-        return engine?.source.uuid
-    }
-
-    /// An identifer such as a `user_id` that can be used on the Birch dashboard to locate the device.
-    public static var identifier: String? {
+    static public var optOut: Bool {
         get {
-            return engine?.source.identifier
+            agent.optOut
         }
         set {
-            engine?.source.identifier = newValue
+            agent.optOut = newValue
         }
     }
 
-    /// Additional properties of the source that should be appended to each log.
-    public static var customProperties: [String: String] {
+    static public var uuid: String? { agent.uuid }
+
+    static public var identifier: String? {
         get {
-            return engine?.source.customProperties ?? [:]
+            agent.identifier
         }
         set {
-            engine?.source.customProperties = newValue
+            agent.identifier = newValue
         }
     }
 
-    /// Set whether logging to console should be enabled. Defaults to FALSE. This should be FALSE in a production build since you cannot read logcat remotely anyways.
-    public static var console: Bool = false
+    static public var customProperties: [String: String] {
+        get {
+            agent.customProperties
+        }
+        set {
+            agent.customProperties = newValue
+        }
+    }
 
-    /// Set whether remote logging is enabled. Defaults to TRUE. This should be TRUE in a production build so your logs are delivered to Birch.
-    public static var remote: Bool = true
+    static public var console: Bool {
+        get {
+            agent.console
+        }
+        set {
+            agent.console = newValue
+        }
+    }
 
-    /// Override the level set by the server. Defaults to NULL. This should be NULL in a production build so you can remotely adjust the log level.
-    public static var level: Level? = nil
+    static public var remote: Bool {
+        get {
+            agent.remote
+        }
+        set {
+            agent.remote = newValue
+        }
+    }
 
-    /// Whether to log synchronously or asynchronously. Defaults to FALSE. This should be FALSE in a production build.
-    public static var synchronous: Bool = false
+    static public var level: Level? {
+        get {
+            agent.level
+        }
+        set {
+            agent.level = newValue
+        }
+    }
 
-    /**
-     Initializes the logger  with the given parameters.
+    static public var synchronous: Bool {
+        get {
+            agent.synchronous
+        }
+        set {
+            agent.synchronous = newValue
+        }
+    }
 
-     - Parameters:
-        - apiKey: Your api key.
-        - publicKey: Your base64 encoded RSA public key.
-        - scrubbers: An array of scrubbers to be used to sanitize logs.
-     */
-    public static func initialize(
+    static public func initialize(
         _ apiKey: String,
         publicKey: String? = nil,
-        scrubbers: [Scrubber] = [
-            PasswordScrubber(),
-            EmailScrubber()
-        ]
+        options: Options = Options()
     ) {
-        if engine == nil {
-            var encryption: Encryption?
-
-            if let publicKey, let enc = Encryption.create(publicKey: publicKey) {
-                encryption = enc
-            }
-
-            let eventBus = EventBus()
-            let storage = Storage()
-            let source = Source(storage: storage, eventBus: eventBus)
-            let logger = Logger(encryption: encryption)
-            let network = Network(apiKey: apiKey)
-
-            engine = Engine(
-                source: source,
-                logger: logger,
-                storage: storage,
-                network: network,
-                eventBus: eventBus,
-                scrubbers: scrubbers
-            )
-            engine?.start()
-        }
+        agent.initialize(apiKey, publicKey: publicKey, options: options)
     }
 
-    /// Flushes logs to the server.
-    public static func flush() {
-        engine?.flush()
+    static public func syncConfiguration() {
+        agent.syncConfiguration()
     }
 
-    public static func t(_ message: String) {
-        t { message }
+    static public func flush() {
+        agent.flush()
     }
 
-    public static func t(_ block: @escaping () -> String) {
-        engine?.log(level: .trace, message: block)
+    static public func t(_ message: String) {
+        agent.t(message)
     }
 
-    public static func d(_ message: String) {
-        d { message }
+    static public func t(_ block: @escaping () -> String) {
+        agent.t(block)
     }
 
-    public static func d(_ block: @escaping () -> String) {
-        engine?.log(level: .debug, message: block)
+    static public func d(_ message: String) {
+        agent.d(message)
     }
 
-    public static func i(_ message: String) {
-        i { message }
+    static public func d(_ block: @escaping () -> String) {
+        agent.d(block)
     }
 
-    public static func i(_ block: @escaping () -> String) {
-        engine?.log(level: .info, message: block)
+    static public func i(_ message: String) {
+        agent.i(message)
     }
 
-    public static func w(_ message: String) {
-        w { message }
+    static public func i(_ block: @escaping () -> String) {
+        agent.i(block)
     }
 
-    public static func w(_ block: @escaping () -> String) {
-        engine?.log(level: .warn, message: block)
+    static public func w(_ message: String) {
+        agent.w(message)
     }
 
-    public static func e(_ message: String) {
-        e { message }
+    static public func w(_ block: @escaping () -> String) {
+        agent.w(block)
     }
 
-    public static func e(_ block: @escaping () -> String) {
-        engine?.log(level: .error, message: block)
+    static public func e(_ message: String) {
+        agent.e(message)
+    }
+
+    static public func e(_ block: @escaping () -> String) {
+        agent.e(block)
     }
 
     private init() {}

@@ -13,17 +13,20 @@ import Nimble
 
 class NetworkTests: QuickSpec {
     override func spec() {
+        var agent: Agent!
         var http: TestHTTP!
         var network: Network!
 
         beforeEach {
-            Birch.debug = true
+            agent = Agent(directory: "birch")
             http = TestHTTP()
-            network = Network(apiKey: "key", configuration: Network.Configuration(), http: http)
-        }
-
-        afterEach {
-            Birch.debug = false
+            network = Network(
+                agent: agent,
+                host: "localhost",
+                apiKey: "key",
+                http: http
+            )
+            agent.debug = true
         }
 
         describe("uploadLogs()") {
@@ -58,7 +61,10 @@ class NetworkTests: QuickSpec {
             var source: Source!
 
             beforeEach {
-                source = Source(storage: Storage(), eventBus: EventBus())
+                source = Source(
+                    storage: Storage(directory: "birch", defaultLevel: .error),
+                    eventBus: EventBus()
+                )
             }
 
             it("doesnt call callback on unauthorized") {
@@ -83,7 +89,10 @@ class NetworkTests: QuickSpec {
             var source: Source!
 
             beforeEach {
-                source = Source(storage: Storage(), eventBus: EventBus())
+                source = Source(
+                    storage: Storage(directory: "birch", defaultLevel: .error),
+                    eventBus: EventBus()
+                )
             }
 
             it("doesnt call callback on unauthorized") {

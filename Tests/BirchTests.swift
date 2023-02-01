@@ -12,233 +12,339 @@ import Nimble
 @testable import Birch
 
 class BirchTests: QuickSpec {
-    private class TestEngine: EngineProtocol {
-        let source: Source = Source(storage: Storage(), eventBus: EventBus())
-
-        var startCalled = false
-        var logCalled = false
-        var flushCalled = false
-        var updateSourceCalled = false
+    private class TestAgent: Agent {
+        var initializeCalled = false
         var syncConfigurationCalled = false
+        var flushCalled = false
+        var tStringCalled = false
+        var dStringCalled = false
+        var iStringCalled = false
+        var wStringCalled = false
+        var eStringCalled = false
+        var tBlockCalled = false
+        var dBlockCalled = false
+        var iBlockCalled = false
+        var wBlockCalled = false
+        var eBlockCalled = false
 
+        override var uuid: String? { "uuid" }
 
-        func start() {
-            startCalled = true
+        var _identifier: String?
+        override var identifier: String? {
+            get {
+                _identifier
+            }
+            set {
+                _identifier = newValue
+            }
         }
 
-        func log(level: Level, message: @escaping () -> String) -> Bool {
-            _ = message()
-            logCalled = true
-            return true
+        var _customProperties: [String: String] = [:]
+        override var customProperties: [String : String] {
+            get {
+                _customProperties
+            }
+            set {
+                _customProperties = newValue
+            }
         }
 
-        func flush() -> Bool {
-            flushCalled = true
-            return true
+        var _level: Level?
+        override var level: Level? {
+            get {
+                _level
+            }
+            set {
+                _level = newValue
+            }
         }
 
-        func updateSource(source: Source) -> Bool {
-            updateSourceCalled = true
-            return true
+        override func initialize(
+            _ apiKey: String,
+            publicKey: String? = nil,
+            options: Options = Options()
+        ) {
+            initializeCalled = true
         }
 
-        func syncConfiguration() -> Bool {
+        override func syncConfiguration() {
             syncConfigurationCalled = true
-            return true
+        }
+
+        override func flush() {
+            flushCalled = true
+        }
+
+        override func t(_ message: String) {
+            tStringCalled = true
+        }
+
+        override func d(_ message: String) {
+            dStringCalled = true
+        }
+
+        override func i(_ message: String) {
+            iStringCalled = true
+        }
+
+        override func w(_ message: String) {
+            wStringCalled = true
+        }
+
+        override func e(_ message: String) {
+            eStringCalled = true
+        }
+
+        override func t(_ block: @escaping () -> String) {
+            tBlockCalled = true
+        }
+
+        override func d(_ block: @escaping () -> String) {
+            dBlockCalled = true
+        }
+
+        override func i(_ block: @escaping () -> String) {
+            iBlockCalled = true
+        }
+
+        override func w(_ block: @escaping () -> String) {
+            wBlockCalled = true
+        }
+
+        override func e(_ block: @escaping () -> String) {
+            eBlockCalled = true
         }
     }
 
     override func spec() {
-        var engine: TestEngine!
+        var agent: TestAgent!
 
         beforeEach {
-            engine = TestEngine()
-            Birch.engine = engine
+            agent = TestAgent(directory: "test")
+            Birch.agent = agent
         }
 
         afterEach {
-            Birch.engine = nil
-            Birch.host = nil
-            Birch.debug = false
+            Birch.agent = Agent(directory: "birch")
         }
 
         describe("debug()") {
-            context("is true") {
-                it("sets flush period to 30") {
-                    Birch.debug = true
-                    expect(Birch.flushPeriod).to(equal(30))
-                }
-
-                it("calls engine.syncConfiguration()") {
-                    Birch.debug = true
-                    expect(engine.syncConfigurationCalled).to(beTrue())
+            describe("get") {
+                it("calls the agent") {
+                    expect(Birch.debug).to(equal(agent.debug))
                 }
             }
 
-            context("is false") {
-                it("sets flush period to nil") {
-                    Birch.debug = false
-                    expect(Birch.flushPeriod).to(beNil())
-                }
-
-                it("calls engine.syncConfiguration()") {
-                    Birch.debug = false
-                    expect(engine.syncConfigurationCalled).to(beTrue())
+            describe("set") {
+                it("calls the agent") {
+                    Birch.debug = true
+                    expect(agent.debug).to(beTrue())
                 }
             }
         }
 
         describe("optOut()") {
-            it("gets and sets") {
-                Birch.optOut = true
-                expect(Birch.optOut).to(beTrue())
-            }
-        }
-
-        describe("host()") {
-            context("set to nil") {
-                it("sets Network.Constants.HOST to be default host") {
-                    Birch.host = nil
-                    expect(Network.Constants.HOST).to(equal(Network.Constants.DEFAULT_HOST))
+            describe("get") {
+                it("calls the agent") {
+                    expect(Birch.optOut).to(equal(agent.optOut))
                 }
             }
 
-            context("set to empty") {
-                it("sets Network.Constants.HOST to be default host") {
-                    Birch.host = ""
-                    expect(Network.Constants.HOST).to(equal(Network.Constants.DEFAULT_HOST))
+            describe("set") {
+                it("calls the agent") {
+                    Birch.optOut = true
+                    expect(agent.optOut).to(beTrue())
                 }
-            }
-
-            context("set to value") {
-                it("sets Network.Constants.HOST to be the value") {
-                    Birch.host = "localhost"
-                    expect(Network.Constants.HOST).to(equal("localhost"))
-                }
-            }
-
-            it("returns the host") {
-                expect(Birch.host).to(equal(Network.Constants.HOST))
             }
         }
 
         describe("uuid()") {
-            it("returns the source uuid") {
-                expect(Birch.uuid).to(equal(engine.source.uuid))
+            it("returns the agent value") {
+                expect(Birch.uuid).to(equal(agent.uuid))
             }
         }
 
         describe("identifier()") {
-            it("gets from the source") {
-                engine.source.identifier = "test"
-                expect(Birch.identifier).to(equal("test"))
+            describe("get") {
+                it("calls the agent") {
+                    agent.identifier = "identifier"
+                    expect(Birch.identifier).to(equal(agent.identifier))
+                }
             }
 
-            it("sets the source") {
-                Birch.identifier = "test"
-                expect(engine.source.identifier).to(equal("test"))
+            describe("set") {
+                it("calls the agent") {
+                    Birch.identifier = "test"
+                    expect(agent.identifier).to(equal("test"))
+                }
             }
         }
 
-        describe("customProperties") {
-            describe("get()") {
-                context("nil custom properties") {
-                    it("returns empty dict") {
-                        engine.source.customProperties = nil
-                        expect(Birch.customProperties).to(beEmpty())
-                    }
-                }
-
-                context("existing custom properties") {
-                    it("returns source dict") {
-                        engine.source.customProperties = ["key": "value"]
-                        expect(Birch.customProperties["key"]).to(equal("value"))
-                    }
+        describe("customProperties()") {
+            describe("get") {
+                it("calls the agent") {
+                    agent.customProperties = ["key": "value"]
+                    expect(Birch.customProperties["key"]).to(equal("value"))
                 }
             }
 
-            describe("set()") {
-                it("sets the source") {
+            describe("set") {
+                it("calls the agent") {
                     Birch.customProperties = ["key": "value"]
-                    expect(engine.source.customProperties!["key"]).to(equal("value"))
+                    expect(agent.customProperties["key"]).to(equal("value"))
                 }
+            }
+        }
+
+        describe("console()") {
+            describe("get") {
+                it("calls the agent") {
+                    expect(Birch.console).to(equal(agent.console))
+                }
+            }
+
+            describe("set") {
+                it("calls the agent") {
+                    Birch.console = true
+                    expect(agent.console).to(beTrue())
+                }
+            }
+        }
+
+        describe("remote") {
+            describe("get") {
+                it("calls the agent") {
+                    expect(Birch.remote).to(equal(agent.remote))
+                }
+            }
+
+            describe("set") {
+                it("calls the agent") {
+                    Birch.remote = true
+                    expect(agent.remote).to(beTrue())
+                }
+            }
+        }
+
+        describe("level()") {
+            describe("get") {
+                it("calls the agent") {
+                    agent.level = .debug
+                    expect(Birch.level).to(equal(agent.level))
+                }
+            }
+
+            describe("set") {
+                it("calls the agent") {
+                    Birch.level = .trace
+                    expect(agent.level).to(equal(.trace))
+                }
+            }
+        }
+
+        describe("synchronous()") {
+            describe("get") {
+                it("calls the agent") {
+                    expect(Birch.synchronous).to(equal(agent.synchronous))
+                }
+            }
+
+            describe("set") {
+                it("calls the agent") {
+                    Birch.synchronous = true
+                    expect(agent.synchronous).to(beTrue())
+                }
+            }
+        }
+
+        describe("initialize()") {
+            it("calls the agent") {
+                Birch.initialize("api_key")
+                expect(agent.initializeCalled).to(beTrue())
+            }
+        }
+
+        describe("syncConfiguration()") {
+            it("calls the agent") {
+                Birch.syncConfiguration()
+                expect(agent.syncConfigurationCalled).to(beTrue())
             }
         }
 
         describe("flush()") {
-            it("calls engine") {
+            it("calls the agent") {
                 Birch.flush()
-                expect(engine.flushCalled).to(beTrue())
+                expect(agent.flushCalled).to(beTrue())
             }
         }
 
         describe("t(String)") {
-            it("calls engine") {
+            it("calls the agent") {
                 Birch.t("message")
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.tStringCalled).to(beTrue())
             }
         }
 
-        describe("t(Block)") {
-            it("calls the engine") {
+        describe("t(block)") {
+            it("calls the agent") {
                 Birch.t { "message" }
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.tBlockCalled).to(beTrue())
             }
         }
 
         describe("d(String)") {
-            it("calls engine") {
+            it("calls the agent") {
                 Birch.d("message")
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.dStringCalled).to(beTrue())
             }
         }
 
-        describe("d(Block)") {
-            it("calls the engine") {
+        describe("d(block)") {
+            it("calls the agent") {
                 Birch.d { "message" }
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.dBlockCalled).to(beTrue())
             }
         }
 
         describe("i(String)") {
-            it("calls engine") {
+            it("calls the agent") {
                 Birch.i("message")
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.iStringCalled).to(beTrue())
             }
         }
 
-        describe("i(Block)") {
-            it("calls the engine") {
+        describe("i(block)") {
+            it("calls the agent") {
                 Birch.i { "message" }
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.iBlockCalled).to(beTrue())
             }
         }
 
         describe("w(String)") {
-            it("calls engine") {
+            it("calls the agent") {
                 Birch.w("message")
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.wStringCalled).to(beTrue())
             }
         }
 
-        describe("w(Block)") {
-            it("calls the engine") {
+        describe("w(block)") {
+            it("calls the agent") {
                 Birch.w { "message" }
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.wBlockCalled).to(beTrue())
             }
         }
 
         describe("e(String)") {
-            it("calls engine") {
+            it("calls the agent") {
                 Birch.e("message")
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.eStringCalled).to(beTrue())
             }
         }
 
-        describe("e(Block)") {
-            it("calls the engine") {
+        describe("e(block)") {
+            it("calls the agent") {
                 Birch.e { "message" }
-                expect(engine.logCalled).to(beTrue())
+                expect(agent.eBlockCalled).to(beTrue())
             }
         }
     }
