@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 # Logging
-Use the logger as you would with the default Android logger.
+Use the logger as you would with any logger.
 
 ```swift
 Birch.t("trace message") // simplest
