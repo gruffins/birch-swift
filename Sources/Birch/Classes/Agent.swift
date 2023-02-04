@@ -12,12 +12,17 @@ public class Agent {
 
     let directory: String
 
+    /// Sets the logger in debug mode..
     public var debug: Bool = false
 
+    /// Sets the logger to opt out. This disables log collection and device synchronization.
     public var optOut: Bool = false
 
+    /// The assigned UUID this source has been given. The UUID remains stable for the install, it does
+    /// not persist across installs.
     public var uuid: String? { engine?.source.uuid }
 
+    /// An identifer such as a `user_id` that can be used on the Birch dashboard to locate the device.
     public var identifier: String? {
         get {
             engine?.source.identifier
@@ -27,6 +32,7 @@ public class Agent {
         }
     }
 
+    /// Additional properties of the source that should be appended to each log.
     public var customProperties: [String: String] {
         get {
             engine?.source.customProperties ?? [:]
@@ -36,18 +42,32 @@ public class Agent {
         }
     }
 
+    /// Set whether logging to console should be enabled. Defaults to FALSE. This should be FALSE in a production build since you cannot read console remotely anyways.
     public var console: Bool = false
 
+    /// Set whether remote logging is enabled. Defaults to TRUE. This should be TRUE in a production build so your logs are delivered to Birch.
     public var remote: Bool = true
 
+    /// Override the level set by the server. Defaults to NULL. This should be NULL in a production build so you can remotely adjust the log level.
     public var level: Level?
 
+    /// Whether to log synchronously or asynchronously. Defaults to FALSE. This should be FALSE in a production build.
     public var synchronous: Bool = false
 
+    /**
+        Creates a new logger in the given directory. All Birch agents must have a unique directory.
+     */
     public init(directory: String) {
         self.directory = directory
     }
 
+    /**
+     Initializes the logger  with the given parameters.
+     - Parameters:
+        - apiKey: Your api key.
+        - publicKey: Your base64 encoded RSA public key.
+        - options: Additional options to configure.
+     */
     public func initialize(
         _ apiKey: String,
         publicKey: String? = nil,
@@ -81,10 +101,12 @@ public class Agent {
         }
     }
 
+    /// Force the agent to synchronize its configuration.
     public func syncConfiguration() {
         engine?.syncConfiguration()
     }
 
+    /// Flushes logs to the server.
     public func flush() {
         engine?.flush()
     }

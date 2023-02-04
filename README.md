@@ -65,11 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       Birch.synchronous = true // This makes the logger log synchronously. The default is false.
     #endif
 
-    // Birch.debug = true // This line MUST be removed after you've successfully integrated. It is only used to help you debug the integration if you're having issues.
+    Birch.debug = true // This line should be removed after you've successfully integrated.
     Birch.initialize("YOUR_API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY")
 
     return true
-    }
+  }
 }
 ```
 # Logging
@@ -130,7 +130,7 @@ Birch.synchronous = true
 ```
 
 ### Debug
-When integrating the library, you may be curious to see the logger at work. By setting debug to true, Birch will log its operations and also flush logs every 30 seconds. The default value is `false`. You should **NOT** set this to true in a production build otherwise you will not be able to set the flush period remotely.
+When integrating the library, you may be curious to see the logger at work.
 ```swift
 Birch.debug = true
 ```
@@ -189,7 +189,10 @@ class YourScrubber: Scrubber {
 ```
 
 ```swift
-Birch.initialize("API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY", scrubbers: [PasswordScrubber(), EmailScrubber(), YourScrubber()])
+let options = Options()
+options.scrubbers = [PasswordScrubber(), EmailScrubber(), YourScrubber()]
+
+Birch.initialize("API_KEY", publicKey: "YOUR_PUBLIC_ENCRYPTION_KEY", options: options)
 ```
 
 # CocoaLumberjack
