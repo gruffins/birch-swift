@@ -193,7 +193,9 @@ class Engine: EngineProtocol {
 
                 self.flushPeriod = period
 
-                self.agent.d { "[Birch] Remote log level set to \(level). Remote flush period set to \(period)." }
+                if self.agent.debug {
+                    self.agent.d { "[Birch] Remote log level set to \(level). Remote flush period set to \(period)." }
+                }
             }
         }
         return true
