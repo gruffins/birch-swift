@@ -13,10 +13,14 @@ import Nimble
 
 class LoggerTests: QuickSpec {
     override func spec() {
+        var agent: Agent!
         var logger: Logger!
 
         beforeEach {
-            logger = Logger(encryption: nil)
+            agent = Agent(directory: "birch")
+            logger = Logger(agent: agent, encryption: nil)
+            agent.debug = true
+            agent.console = true
         }
 
         afterEach {
@@ -26,12 +30,6 @@ class LoggerTests: QuickSpec {
                     includingPropertiesForKeys: []
                 ).forEach { Utils.deleteFile(url: $0) }
             }
-
-            Birch.debug = false
-            Birch.console = false
-            Birch.remote = true
-            Birch.level = nil
-            Birch.synchronous = false
         }
 
         describe("nonCurrentFiles()") {
@@ -46,11 +44,11 @@ class LoggerTests: QuickSpec {
 
         describe("log()") {
             beforeEach {
-                Birch.synchronous = true
+                agent.synchronous = true
             }
 
             it("logs if local level overridden") {
-                Birch.level = .trace
+                agent.level = .trace
                 logger.level = .none
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
                 expect(Utils.fileExists(url: logger.current)).to(beTrue())
@@ -70,8 +68,8 @@ class LoggerTests: QuickSpec {
 
             describe("with console") {
                 it("logs") {
-                    Birch.level = .trace
-                    Birch.console = true
+                    agent.level = .trace
+                    agent.console = true
                     
                     var calls: [Level: Bool] = [
                         .trace: false,
@@ -116,6 +114,7 @@ class LoggerTests: QuickSpec {
             context("with encryption") {
                 beforeEach {
                     logger = Logger(
+                        agent: agent,
                         encryption: Encryption.create(
                             publicKey: EncryptionTests.Constants.PUBLIC_KEY
                         )
@@ -149,7 +148,7 @@ class LoggerTests: QuickSpec {
 
             context("with remote disabled") {
                 it("doesnt write to disk") {
-                    Birch.remote = false
+                    agent.remote = false
                     logger.level = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).to(beTrue())
@@ -160,7 +159,7 @@ class LoggerTests: QuickSpec {
 
             context("synchronously") {
                 it("logs") {
-                    Birch.synchronous = true
+                    agent.synchronous = true
                     logger.level = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).to(beTrue())

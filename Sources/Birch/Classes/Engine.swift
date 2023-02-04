@@ -30,7 +30,7 @@ class Engine: EngineProtocol {
     }
 
     private let queue = DispatchQueue(label: "Birch-Engine")
-
+    private let agent: Agent
     private let logger: Logger
     private let storage: Storage
     private let network: Network
@@ -39,12 +39,10 @@ class Engine: EngineProtocol {
     private var isStarted = false
     private var flushPeriod: Int {
         didSet {
-            let period = Double(Birch.flushPeriod ?? flushPeriod)
-
             DispatchQueue.main.async {
                 self.timers[.flush]?.invalidate()
                 self.timers[.flush] = Timer.scheduledTimer(
-                    withTimeInterval: period,
+                    withTimeInterval: TimeInterval(self.flushPeriod),
                     repeats: true
                 ) { [weak self] _ in self?.flush() }
             }
@@ -56,6 +54,7 @@ class Engine: EngineProtocol {
     var timers: [TimerType: Timer] = [:]
 
     init(
+        agent: Agent,
         source: Source,
         logger: Logger,
         storage: Storage,
@@ -63,6 +62,7 @@ class Engine: EngineProtocol {
         eventBus: EventBus,
         scrubbers: [Scrubber]
     ) {
+        self.agent = agent
         self.source = source
         self.logger = logger
         self.storage = storage
@@ -116,7 +116,7 @@ class Engine: EngineProtocol {
     }
 
     @discardableResult func log(level: Level, message: @escaping () -> String) -> Bool {
-        guard !Birch.optOut else { return false }
+        guard !agent.optOut else { return false }
 
         let timestamp = Utils.dateFormatter.string(from: Date())
         let scrubbed = {
@@ -140,7 +140,7 @@ class Engine: EngineProtocol {
     }
 
     @discardableResult func flush() -> Bool {
-        guard !Birch.optOut else { return false }
+        guard !agent.optOut else { return false }
 
         queue.async {
             self.logger.rollFile()
@@ -148,16 +148,16 @@ class Engine: EngineProtocol {
                 .sorted(by: { l, r in l.path > r.path})
                 .forEach { url in
                     if Utils.fileSize(url: url) == 0 {
-                        if Birch.debug {
-                            Birch.d { "[Birch] Empty file \(url.lastPathComponent)."}
+                        if self.agent.debug {
+                            self.agent.d { "[Birch] Empty file \(url.lastPathComponent)."}
                         }
                         Utils.deleteFile(url: url)
                     } else {
                         Utils.safeIgnore {
                             try self.network.uploadLogs(url: url) { success in
                                 if success {
-                                    if Birch.debug {
-                                        Birch.d { "[Birch] Removing file \(url.lastPathComponent)." }
+                                    if self.agent.debug {
+                                        self.agent.d { "[Birch] Removing file \(url.lastPathComponent)." }
                                     }
 
                                     Utils.deleteFile(url: url)
@@ -171,7 +171,7 @@ class Engine: EngineProtocol {
     }
 
     @discardableResult func updateSource(source: Source) -> Bool {
-        guard !Birch.optOut else { return false }
+        guard !agent.optOut else { return false }
 
         queue.async {
             self.network.syncSource(source: source)
@@ -180,18 +180,20 @@ class Engine: EngineProtocol {
     }
 
     @discardableResult func syncConfiguration() -> Bool {
-        guard !Birch.optOut else { return false }
+        guard !agent.optOut else { return false }
 
         queue.async {
             self.network.getConfiguration(source: self.source) { json in
-                let level = Level(rawValue: (json["log_level"] as? Int) ?? Level.error.rawValue)
+                let level = Level(rawValue: (json["log_level"] as? Int) ?? Level.error.rawValue) ?? Level.error
                 let period = (json["flush_period_seconds"] as? Int) ?? Constants.FLUSH_PERIOD_SECONDS
 
-                self.storage.logLevel = level ?? Level.error
-                self.logger.level = level ?? Level.error
+                self.storage.logLevel = level
+                self.logger.level = level
                 self.storage.flushPeriod = period
 
                 self.flushPeriod = period
+
+                self.agent.d { "[Birch] Remote log level set to \(level). Remote flush period set to \(period)." }
             }
         }
         return true

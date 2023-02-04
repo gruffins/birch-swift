@@ -39,14 +39,25 @@ class EventBusTests: QuickSpec {
 
         describe("publish()") {
             it("publishes to listeners") {
-                let source = Source(storage: Storage(), eventBus: eventBus)
+                let source = Source(
+                    storage: Storage(
+                        directory: "birch",
+                        defaultLevel: .error),
+                    eventBus: eventBus
+                )
                 eventBus.subscribe(listener: listener)
                 eventBus.publish(event: .sourceUpdate(source))
                 expect(listener.events).notTo(beEmpty())
             }
 
             it("doesnt publish to unsubscribed listeners") {
-                let source = Source(storage: Storage(), eventBus: eventBus)
+                let source = Source(
+                    storage: Storage(
+                        directory: "birch",
+                        defaultLevel: .error
+                    ),
+                    eventBus: eventBus
+                )
                 eventBus.subscribe(listener: listener)
                 eventBus.unsubscribe(listener: listener)
                 eventBus.publish(event: .sourceUpdate(source))

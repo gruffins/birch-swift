@@ -13,6 +13,7 @@ import Nimble
 
 class EngineTests: QuickSpec {
     override func spec() {
+        var agent: Agent!
         var source: Source!
         var logger: Logger!
         var storage: Storage!
@@ -22,13 +23,20 @@ class EngineTests: QuickSpec {
         var http: TestHTTP!
 
         beforeEach {
-            storage = Storage()
-            logger = Logger(encryption: nil)
+            agent = Agent(directory: "birch")
+            storage = Storage(directory: "birch", defaultLevel: .error)
+            logger = Logger(agent: agent, encryption: nil)
             eventBus = EventBus()
             source = Source(storage: storage, eventBus: eventBus)
             http = TestHTTP()
-            network = Network(apiKey: "key", configuration: Network.Configuration(), http: http)
+            network = Network(
+                agent: agent,
+                host: "localhost",
+                apiKey: "key",
+                http: http
+            )
             engine = Engine(
+                agent: agent,
                 source: source,
                 logger: logger,
                 storage: storage,
@@ -39,11 +47,7 @@ class EngineTests: QuickSpec {
                     EmailScrubber()
                 ]
             )
-        }
-
-        afterEach {
-            Birch.optOut = false
-            Birch.debug = false
+            agent.debug = true
         }
 
         describe("start()") {
@@ -87,7 +91,7 @@ class EngineTests: QuickSpec {
 
             context("opted out") {
                 beforeEach {
-                    Birch.optOut = true
+                    agent.optOut = true
                 }
 
                 it("returns false") {
@@ -139,7 +143,7 @@ class EngineTests: QuickSpec {
 
             context("opted out") {
                 beforeEach {
-                    Birch.optOut = true
+                    agent.optOut = true
                 }
 
                 it("returns false") {
@@ -157,7 +161,7 @@ class EngineTests: QuickSpec {
 
             context("opted out") {
                 beforeEach {
-                    Birch.optOut = true
+                    agent.optOut = true
                 }
 
                 it("doesnt update the source") {
@@ -202,7 +206,7 @@ class EngineTests: QuickSpec {
 
             context("opted out") {
                 beforeEach {
-                    Birch.optOut = true
+                    agent.optOut = true
                 }
 
                 it("returns false") {

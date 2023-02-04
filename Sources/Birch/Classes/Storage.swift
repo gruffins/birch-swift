@@ -8,7 +8,13 @@
 import Foundation
 
 class Storage {
-    let defaults = UserDefaults(suiteName: "com.gruffins.birch")
+    let defaults: UserDefaults?
+    let defaultLevel: Level
+
+    init(directory: String, defaultLevel: Level) {
+        self.defaults = UserDefaults(suiteName: "com.gruffins.\(directory)")
+        self.defaultLevel = defaultLevel
+    }
 
     var uuid: String? {
         get {
@@ -40,9 +46,9 @@ class Storage {
     var logLevel: Level {
         get {
             if let level = defaults?.integer(forKey: "log_level") {
-                return Level(rawValue: level) ?? .error
+                return Level(rawValue: level) ?? defaultLevel
             }
-            return .error
+            return defaultLevel
         }
         set {
             defaults?.set(newValue.rawValue, forKey: "log_level")

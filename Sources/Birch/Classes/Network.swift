@@ -10,32 +10,36 @@ import Foundation
 class Network {
 
     struct Constants {
-        static let DEFAULT_HOST = "birch.ryanfung.com"
-        static var HOST = DEFAULT_HOST
+        static let UPLOAD_PATH = "/api/v1/logs"
+        static let SOURCE_PATH = "/api/v1/sources"
+        static let CONFIGURATION_PATH = "/api/v1/sources/%@/configuration"
     }
 
+    private let agent: Agent
+    private let host: String
     private let apiKey: String
-    private let configuration: Configuration
     private let http: HTTP
     private let fileManager = FileManager.default
 
     init(
+        agent: Agent,
+        host: String,
         apiKey: String,
-        configuration: Configuration = Configuration(),
         http: HTTP = HTTP()
     ) {
+        self.agent = agent
+        self.host = host
         self.apiKey = apiKey
-        self.configuration = configuration
         self.http = http
     }
 
     func uploadLogs(url: URL, callback: @escaping (Bool) -> Void) throws {
         Utils.safeIgnore {
-            if Birch.debug {
-                Birch.d { "[Birch] Pushing logs \(url.lastPathComponent)" }
+            if self.agent.debug {
+                self.agent.d { "[Birch] Pushing logs \(url.lastPathComponent)" }
             }
 
-            if let requestUrl = self.createURL(path: self.configuration.uploadPath),
+            if let requestUrl = self.createURL(path: Constants.UPLOAD_PATH),
                let file = self.fileManager.contents(atPath: url.path)
             {
                 try self.http.post(
@@ -44,10 +48,10 @@ class Network {
                     headers: ["X-API-Key": self.apiKey]
                 ) { response in
                     if response.unauthorized {
-                        Birch.e { "[Birch] Invalid API key." }
+                        self.agent.e { "[Birch] Invalid API key." }
                     } else {
-                        if Birch.debug {
-                            Birch.d { "[Birch] Upload logs responded. success=\(response.success)" }
+                        if self.agent.debug {
+                            self.agent.d { "[Birch] Upload logs responded. success=\(response.success)" }
                         }
                         callback(response.success)
                     }
@@ -58,11 +62,11 @@ class Network {
 
     func syncSource(source: Source, callback: @escaping () -> Void = {}) {
         Utils.safeIgnore {
-            if Birch.debug {
-                Birch.d { "[Birch] Pushing source." }
+            if self.agent.debug {
+                self.agent.d { "[Birch] Pushing source." }
             }
 
-            if let requestUrl = self.createURL(path: self.configuration.sourcePath),
+            if let requestUrl = self.createURL(path: Constants.SOURCE_PATH),
                let body = Utils.dictionaryToJson(input: ["source": source.toJson()])
             {
                 self.http.post(
@@ -74,10 +78,10 @@ class Network {
                     ]
                 ) { response in
                     if response.unauthorized {
-                        Birch.e { "[Birch] Invalid API key." }
+                        self.agent.e { "[Birch] Invalid API key." }
                     } else {
-                        if Birch.debug {
-                            Birch.d { "[Birch] Sync source responded. success=\(response.success)" }
+                        if self.agent.debug {
+                            self.agent.d { "[Birch] Sync source responded. success=\(response.success)" }
                         }
                         callback()
                     }
@@ -88,11 +92,11 @@ class Network {
 
     func getConfiguration(source: Source, callback: @escaping ([String: Any]) -> Void) {
         Utils.safeIgnore {
-            if Birch.debug {
-                Birch.d { "[Birch] Fetching source configuration." }
+            if self.agent.debug {
+                self.agent.d { "[Birch] Fetching source configuration." }
             }
 
-            if let requestUrl = self.createURL(path: String(format: self.configuration.configurationPath, source.uuid)) {
+            if let requestUrl = self.createURL(path: String(format: Constants.CONFIGURATION_PATH, source.uuid)) {
                 self.http.get(
                     url: requestUrl,
                     headers: [
@@ -101,10 +105,10 @@ class Network {
                     ]
                 ) { response in
                     if response.unauthorized {
-                        Birch.e { "[Birch] Invalid API key." }
+                        self.agent.e { "[Birch] Invalid API key." }
                     } else if response.success {
-                        if Birch.debug {
-                            Birch.d { "[Birch] Get configuration responded. success=\(response.success)" }
+                        if self.agent.debug {
+                            self.agent.d { "[Birch] Get configuration responded. success=\(response.success)" }
                         }
 
                         if let dict = Utils.jsonToDictionary(input: response.body),
@@ -116,32 +120,13 @@ class Network {
             }
         }
     }
-
-    struct Configuration {
-        let host: String
-        let uploadPath: String
-        let sourcePath: String
-        let configurationPath: String
-
-        init(
-            host: String = Constants.HOST,
-            uploadPath: String = "/api/v1/logs",
-            sourcePath: String = "/api/v1/sources",
-            configurationPath: String = "/api/v1/sources/%@/configuration"
-        ) {
-            self.host = host
-            self.uploadPath = uploadPath
-            self.sourcePath = sourcePath
-            self.configurationPath = configurationPath
-        }
-    }
 }
 
 private extension Network {
     func createURL(path: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = configuration.host
+        components.host = host
         components.path = path
         return components.url
     }
