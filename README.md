@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     #if DEBUG
       Birch.console = true // This enables logging to the console. The default is false.
       Birch.remote = false // This disables remote logging if it's a debug build. The default is true.
-      Birch.level = Level.TRACE // This overrides the server configuration during local development. The default is null.
+      Birch.level = .trace // This overrides the server configuration during local development. The default is null.
       Birch.synchronous = true // This makes the logger log synchronously. The default is false.
     #endif
 
