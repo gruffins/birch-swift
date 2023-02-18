@@ -27,6 +27,7 @@ Birch can drain to
 - CloudWatch
 - S3
 - Wasabi
+- Google Cloud Logging
 - A custom webhook
 
 # Installation
