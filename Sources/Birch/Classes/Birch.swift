@@ -10,7 +10,7 @@ import Foundation
 public class Birch {
     static var agent: Agent = Agent(directory: "birch")
 
-    /// Sets the logger in debug mode..
+    /// Sets the logger in debug mode.
     static public var debug: Bool {
         get {
             agent.debug
@@ -54,7 +54,7 @@ public class Birch {
         }
     }
 
-    /// Set whether logging to console should be enabled. Defaults to FALSE. This should be FALSE in a production build since you cannot read console remotely anyways.
+    /// Set whether logging to console should be enabled. Defaults to TRUE. Consider changing to FALSE in production.
     static public var console: Bool {
         get {
             agent.console

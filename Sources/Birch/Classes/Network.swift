@@ -35,9 +35,7 @@ class Network {
 
     func uploadLogs(url: URL, callback: @escaping (Bool) -> Void) throws {
         Utils.safeIgnore {
-            if self.agent.debug {
-                self.agent.d { "[Birch] Pushing logs \(url.lastPathComponent)" }
-            }
+            self.agent.debugStatement { "[Birch] Pushing logs \(url.lastPathComponent)" }
 
             if let requestUrl = self.createURL(path: Constants.UPLOAD_PATH),
                let file = self.fileManager.contents(atPath: url.path)
@@ -50,9 +48,8 @@ class Network {
                     if response.unauthorized {
                         self.agent.e { "[Birch] Invalid API key." }
                     } else {
-                        if self.agent.debug {
-                            self.agent.d { "[Birch] Upload logs responded. success=\(response.success)" }
-                        }
+                        self.agent.debugStatement { "[Birch] Upload logs responded. success=\(response.success)" }
+
                         callback(response.success)
                     }
                 }
@@ -62,9 +59,7 @@ class Network {
 
     func syncSource(source: Source, callback: @escaping () -> Void = {}) {
         Utils.safeIgnore {
-            if self.agent.debug {
-                self.agent.d { "[Birch] Pushing source." }
-            }
+            self.agent.debugStatement { "[Birch] Pushing source." }
 
             if let requestUrl = self.createURL(path: Constants.SOURCE_PATH),
                let body = Utils.dictionaryToJson(input: ["source": source.toJson()])
@@ -80,9 +75,7 @@ class Network {
                     if response.unauthorized {
                         self.agent.e { "[Birch] Invalid API key." }
                     } else {
-                        if self.agent.debug {
-                            self.agent.d { "[Birch] Sync source responded. success=\(response.success)" }
-                        }
+                        self.agent.debugStatement { "[Birch] Sync source responded. success=\(response.success)" }
                         callback()
                     }
                 }
@@ -92,9 +85,7 @@ class Network {
 
     func getConfiguration(source: Source, callback: @escaping ([String: Any]) -> Void) {
         Utils.safeIgnore {
-            if self.agent.debug {
-                self.agent.d { "[Birch] Fetching source configuration." }
-            }
+            self.agent.debugStatement { "[Birch] Fetching source configuration." }
 
             if let requestUrl = self.createURL(path: String(format: Constants.CONFIGURATION_PATH, source.uuid)) {
                 self.http.get(
@@ -107,9 +98,7 @@ class Network {
                     if response.unauthorized {
                         self.agent.e { "[Birch] Invalid API key." }
                     } else if response.success {
-                        if self.agent.debug {
-                            self.agent.d { "[Birch] Get configuration responded. success=\(response.success)" }
-                        }
+                        self.agent.debugStatement { "[Birch] Get configuration responded. success=\(response.success)" }
 
                         if let dict = Utils.jsonToDictionary(input: response.body),
                            let sourceConfig = dict["source_configuration"] as? [String: Any] {
