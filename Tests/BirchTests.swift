@@ -49,6 +49,16 @@ class BirchTests: QuickSpec {
             }
         }
 
+        var _optOut: Bool = false
+        override var optOut: Bool {
+            get {
+                _optOut
+            }
+            set {
+                _optOut = newValue
+            }
+        }
+
         var _level: Level?
         override var level: Level? {
             get {

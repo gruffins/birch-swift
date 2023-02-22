@@ -9,6 +9,7 @@ import Foundation
 
 protocol EngineProtocol {
     var source: Source { get }
+    var storage: Storage { get }
 
     func start()
     @discardableResult func log(level: Level, message: @escaping () -> String) -> Bool
@@ -32,7 +33,6 @@ class Engine: EngineProtocol {
     private let queue = DispatchQueue(label: "Birch-Engine")
     private let agent: Agent
     private let logger: Logger
-    private let storage: Storage
     private let network: Network
     private let eventBus: EventBus
     private let scrubbers: [Scrubber]
@@ -50,6 +50,7 @@ class Engine: EngineProtocol {
     }
 
     let source: Source
+    let storage: Storage
 
     var timers: [TimerType: Timer] = [:]
 

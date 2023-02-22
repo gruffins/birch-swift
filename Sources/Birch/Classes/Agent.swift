@@ -16,7 +16,14 @@ public class Agent {
     public var debug: Bool = false
 
     /// Sets the logger to opt out. This disables log collection and device synchronization.
-    public var optOut: Bool = false
+    public var optOut: Bool {
+        get {
+            engine?.storage.optOut ?? false
+        }
+        set {
+            engine?.storage.optOut = newValue
+        }
+    }
 
     /// The assigned UUID this source has been given. The UUID remains stable for the install, it does
     /// not persist across installs.

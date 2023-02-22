@@ -13,16 +13,19 @@ import Nimble
 
 class AgentTests: QuickSpec {
     private class TestEngine: EngineProtocol {
-        let source: Source = Source(
-            storage: Storage(directory: "birch", defaultLevel: .error),
-            eventBus: EventBus()
-        )
+        let source: Source
+        let storage: Storage
 
         var startCalled = false
         var logCalled = false
         var flushCalled = false
         var updateSourceCalled = false
         var syncConfigurationCalled = false
+
+        init() {
+            storage = Storage(directory: "birch", defaultLevel: .error)
+            source = Source(storage: storage, eventBus: EventBus())
+        }
 
         func start() {
             startCalled = true
@@ -69,6 +72,18 @@ class AgentTests: QuickSpec {
             it("sets") {
                 agent.identifier = "user_id"
                 expect(engine.source.identifier).to(equal("user_id"))
+            }
+        }
+
+        describe("optOut()") {
+            it("gets") {
+                engine.storage.optOut = true
+                expect(agent.optOut).to(beTrue())
+            }
+
+            it("sets") {
+                agent.optOut = true
+                expect(engine.storage.optOut).to(beTrue())
             }
         }
 
