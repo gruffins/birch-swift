@@ -19,6 +19,10 @@ class StorageTests: QuickSpec {
             storage = Storage(directory: "birch", defaultLevel: .error)
         }
 
+        afterEach {
+            storage.defaults?.removeSuite(named: "com.gruffins.birch")
+        }
+
         describe("uuid") {
             it("gets and sets") {
                 let uuid = UUID().uuidString
@@ -56,6 +60,13 @@ class StorageTests: QuickSpec {
                 let flushPeriod = 30
                 storage.flushPeriod = flushPeriod
                 expect(storage.flushPeriod).to(equal(flushPeriod))
+            }
+        }
+
+        describe("optOut") {
+            it("gets and sets") {
+                storage.optOut = true
+                expect(storage.optOut).to(beTrue())
             }
         }
     }

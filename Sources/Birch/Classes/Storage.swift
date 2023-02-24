@@ -18,7 +18,7 @@ class Storage {
 
     var uuid: String? {
         get {
-            return defaults?.string(forKey: "uuid")
+            defaults?.string(forKey: "uuid")
         }
         set {
             defaults?.set(newValue, forKey: "uuid")
@@ -27,7 +27,7 @@ class Storage {
 
     var identifier: String? {
         get {
-            return defaults?.string(forKey: "identifier")
+            defaults?.string(forKey: "identifier")
         }
         set {
             defaults?.set(newValue, forKey: "identifier")
@@ -36,7 +36,7 @@ class Storage {
 
     var customProperties: [String: String]? {
         get {
-            return defaults?.object(forKey: "custom_properties") as? [String: String]
+            defaults?.object(forKey: "custom_properties") as? [String: String]
         }
         set {
             defaults?.set(newValue, forKey: "custom_properties")
@@ -57,10 +57,19 @@ class Storage {
 
     var flushPeriod: Int {
         get {
-            return defaults?.integer(forKey: "flush_period") ?? Engine.Constants.FLUSH_PERIOD_SECONDS
+            defaults?.integer(forKey: "flush_period") ?? Engine.Constants.FLUSH_PERIOD_SECONDS
         }
         set {
             defaults?.set(newValue, forKey: "flush_period")
+        }
+    }
+
+    var optOut: Bool {
+        get {
+            defaults?.bool(forKey: "opt_out") ?? false
+        }
+        set {
+            defaults?.set(newValue, forKey: "opt_out")
         }
     }
 }

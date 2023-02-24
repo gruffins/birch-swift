@@ -47,6 +47,7 @@ class EngineTests: QuickSpec {
                     EmailScrubber()
                 ]
             )
+            agent.engine = engine
             agent.debug = true
         }
 
@@ -69,6 +70,10 @@ class EngineTests: QuickSpec {
 
         describe("log()") {
             context("opted in") {
+                beforeEach {
+                    agent.optOut = false
+                }
+
                 it("logs the message") {
                     logger.level = .trace
                     engine.log(level: .trace, message: { "message" })
@@ -110,6 +115,10 @@ class EngineTests: QuickSpec {
             }
 
             context("opted in") {
+                beforeEach {
+                    agent.optOut = false
+                }
+
                 it("deletes empty files") {
                     Utils.createFile(url: file)
                     engine.flush()
@@ -154,6 +163,10 @@ class EngineTests: QuickSpec {
 
         describe("updateSource()") {
             context("opted in") {
+                beforeEach {
+                    agent.optOut = false
+                }
+
                 it("returns true") {
                     expect(engine.updateSource(source: source)).to(beTrue())
                 }
@@ -183,6 +196,10 @@ class EngineTests: QuickSpec {
             }
 
             context("opted in") {
+                beforeEach {
+                    agent.optOut = false
+                }
+
                 it("updates storage") {
                     engine.syncConfiguration()
                     expect(storage.logLevel).toEventually(equal(.info))
