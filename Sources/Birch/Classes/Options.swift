@@ -10,7 +10,7 @@ import Foundation
 public class Options {
     var scrubbers: [Scrubber] = [EmailScrubber(), PasswordScrubber()]
     var host: String = "birch.ryanfung.com"
-    var defaultLevel: Level = .error
+    var defaultLevel: Level = .trace
 
     public init() {}
 }

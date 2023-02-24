@@ -12,7 +12,7 @@ public class Agent {
 
     let directory: String
 
-    /// Sets the logger in debug mode..
+    /// Sets the logger in debug mode.
     public var debug: Bool = false
 
     /// Sets the logger to opt out. This disables log collection and device synchronization.
@@ -49,8 +49,8 @@ public class Agent {
         }
     }
 
-    /// Set whether logging to console should be enabled. Defaults to FALSE. This should be FALSE in a production build since you cannot read console remotely anyways.
-    public var console: Bool = false
+    /// Set whether logging to console should be enabled. Defaults to TRUE. Consider changing to FALSE in production.
+    public var console: Bool = true
 
     /// Set whether remote logging is enabled. Defaults to TRUE. This should be TRUE in a production build so your logs are delivered to Birch.
     public var remote: Bool = true
@@ -156,5 +156,11 @@ public class Agent {
 
     public func e(_ block: @escaping () -> String) {
         engine?.log(level: .error, message: block)
+    }
+
+    func debugStatement(_ block: @escaping () -> String) {
+        if debug {
+            d(block)
+        }
     }
 }

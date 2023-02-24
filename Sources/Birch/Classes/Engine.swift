@@ -149,18 +149,13 @@ class Engine: EngineProtocol {
                 .sorted(by: { l, r in l.path > r.path})
                 .forEach { url in
                     if Utils.fileSize(url: url) == 0 {
-                        if self.agent.debug {
-                            self.agent.d { "[Birch] Empty file \(url.lastPathComponent)."}
-                        }
+                        self.agent.debugStatement { "[Birch] Empty file \(url.lastPathComponent)." }
                         Utils.deleteFile(url: url)
                     } else {
                         Utils.safeIgnore {
                             try self.network.uploadLogs(url: url) { success in
                                 if success {
-                                    if self.agent.debug {
-                                        self.agent.d { "[Birch] Removing file \(url.lastPathComponent)." }
-                                    }
-
+                                    self.agent.debugStatement { "[Birch] Removing file \(url.lastPathComponent)." }
                                     Utils.deleteFile(url: url)
                                 }
                             }
@@ -185,17 +180,18 @@ class Engine: EngineProtocol {
 
         queue.async {
             self.network.getConfiguration(source: self.source) { json in
-                let level = Level(rawValue: (json["log_level"] as? Int) ?? Level.error.rawValue) ?? Level.error
-                let period = (json["flush_period_seconds"] as? Int) ?? Constants.FLUSH_PERIOD_SECONDS
+                if let rawValue = json["log_level"] as? Int, let level = Level(rawValue: rawValue) {
+                    self.storage.logLevel = level
+                    self.logger.level = level
 
-                self.storage.logLevel = level
-                self.logger.level = level
-                self.storage.flushPeriod = period
+                    self.agent.debugStatement { "[Birch] Remote log level set to \(level)." }
+                }
 
-                self.flushPeriod = period
+                if let period = json["flush_period_seconds"] as? Int {
+                    self.storage.flushPeriod = period
+                    self.flushPeriod = period
 
-                if self.agent.debug {
-                    self.agent.d { "[Birch] Remote log level set to \(level). Remote flush period set to \(period)." }
+                    self.agent.debugStatement { "[Birch] Remote flush period set to \(period)." }
                 }
             }
         }
