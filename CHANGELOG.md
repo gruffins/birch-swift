@@ -1,5 +1,11 @@
 # Changes
 
+1.7.0
+----------
+- Persist optOut changes.
+- Default console logging to true.
+- Default log level to trace.
+
 1.6.0
 ----------
 - Add ability to force config synchronization.
