@@ -60,10 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     #if DEBUG
-      Birch.console = true // This enables logging to the console. The default is false.
-      Birch.remote = false // This disables remote logging if it's a debug build. The default is true.
       Birch.level = .trace // This overrides the server configuration during local development. The default is null.
       Birch.synchronous = true // This makes the logger log synchronously. The default is false.
+    #else
+      Birch.console = false // Disable console logging in production.
     #endif
 
     Birch.debug = true // This line should be removed after you've successfully integrated.
@@ -107,7 +107,7 @@ If the current log level is `INFO`, the log will not get constructed.
 Device level configuration is left to the server so you can remotely control it. There are a few things you can control on the client side.
 
 ### Console
-During local development, it is useful to see the logs in the console. These console logs are not useful in production since you cannot read them remotely. The default is `false`.
+During local development, it is useful to see the logs in the console. These console logs are not useful in production since you cannot read them remotely. The default is `true`.
 ```kotlin
 Birch.console = true
 ```
@@ -163,8 +163,6 @@ To comply with different sets of regulations such as GDPR or CCPA, you may be re
 ```swift
 Birch.optOut = true
 ```
-
-Your application is responsible for changing this and setting it to the correct value at launch. Birch will not remember the last setting and it defaults to `false`.
 
 # Log Scrubbing
 
