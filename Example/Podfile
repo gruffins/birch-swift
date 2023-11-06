@@ -1,20 +1,20 @@
 use_frameworks!
 
 target 'ios' do
-  platform :ios, '11.0'
+  platform :ios, '13.0'
 
   pod 'Birch', path: '../', testspecs: ['Tests']
   pod 'Anchorage'
 end
 
 target 'tvos' do
-  platform :tvos, '11.0'
+  platform :tvos, '13.0'
 
   pod 'Birch', path: '../', testspecs: ['Tests']
 end
 
 target 'macos' do
-  platform :macos, '10.13'
+  platform :macos, '10.15'
 
   pod 'Birch', path: '../', testspecs: ['Tests']
 end

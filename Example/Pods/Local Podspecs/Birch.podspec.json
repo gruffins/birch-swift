@@ -15,9 +15,9 @@
     "tag": "1.7.0"
   },
   "platforms": {
-    "ios": "11.0",
-    "tvos": "11.0",
-    "osx": "10.13"
+    "ios": "13.0",
+    "tvos": "13.0",
+    "osx": "10.15"
   },
   "swift_versions": "5.7",
   "source_files": "Sources/Birch/Classes/**/*",

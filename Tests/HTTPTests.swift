@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class HTTPTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var session: TestSession!
         var http: HTTP!
         var url: URL!

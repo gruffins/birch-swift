@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class StorageTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var storage: Storage!
 
         beforeEach {

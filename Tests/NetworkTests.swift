@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class NetworkTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var agent: Agent!
         var http: TestHTTP!
         var network: Network!

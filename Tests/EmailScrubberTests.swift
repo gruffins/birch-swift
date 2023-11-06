@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class EmailScrubberTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var scrubber: EmailScrubber!
 
         beforeEach {
