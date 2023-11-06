@@ -4,8 +4,8 @@ PODS:
   - Birch/Tests (1.7.0):
     - Nimble
     - Quick
-  - Nimble (10.0.0)
-  - Quick (5.0.1)
+  - Nimble (13.0.0)
+  - Quick (7.3.0)
 
 DEPENDENCIES:
   - Anchorage
@@ -24,10 +24,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Anchorage: 1961bc81c84aeed54ad7ffc697c50cd9de748ba6
-  Birch: ad09e1d78ef3d130288fc9d2e251fbee101ae37d
-  Nimble: 5316ef81a170ce87baf72dd961f22f89a602ff84
-  Quick: 749aa754fd1e7d984f2000fe051e18a3a9809179
+  Birch: 3e560d20e1d4cdce8314a2262e3ccffdcb3b20ee
+  Nimble: 97d90931cca412a23224ff29e258809f75c258f7
+  Quick: d32871931c05547cb4e0bc9009d66a18b50d8558
 
-PODFILE CHECKSUM: 2457a300f244b4f232bb8ceaec5f5d63e1520194
+PODFILE CHECKSUM: 766f0343ce8b6abc384d1755c686c7c0f4513c56
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.2

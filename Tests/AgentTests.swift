@@ -53,7 +53,7 @@ class AgentTests: QuickSpec {
         }
     }
 
-    override func spec() {
+    override class func spec() {
         var agent: Agent!
         var engine: TestEngine!
 

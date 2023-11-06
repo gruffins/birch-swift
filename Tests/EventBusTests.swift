@@ -28,7 +28,7 @@ class Listener: EventBusListener, Hashable, Equatable {
 }
 
 class EventBusTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var listener: Listener!
         var eventBus: EventBus!
 

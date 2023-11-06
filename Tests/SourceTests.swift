@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class SourceTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var source: Source!
         var storage: Storage!
         var eventBus: EventBus!

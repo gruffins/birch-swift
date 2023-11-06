@@ -126,7 +126,7 @@ class BirchTests: QuickSpec {
         }
     }
 
-    override func spec() {
+    override class func spec() {
         var agent: TestAgent!
 
         beforeEach {

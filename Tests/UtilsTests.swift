@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class UtilsTest: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var manager: FileManager!
         var path: URL!
 

@@ -12,7 +12,7 @@ import Nimble
 @testable import Birch
 
 class EngineTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         var agent: Agent!
         var source: Source!
         var logger: Logger!
