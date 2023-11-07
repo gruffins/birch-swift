@@ -1,6 +1,6 @@
 {
   "name": "Birch",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "summary": "Remote logger for the Birch platform.",
   "homepage": "https://github.com/gruffins/birch-swift",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/gruffins/birch-swift.git",
-    "tag": "1.7.0"
+    "tag": "1.8.0"
   },
   "platforms": {
     "ios": "13.0",
