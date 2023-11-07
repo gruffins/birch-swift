@@ -1,7 +1,7 @@
 PODS:
   - Anchorage (4.5.0)
-  - Birch (1.7.0)
-  - Birch/Tests (1.7.0):
+  - Birch (1.8.0)
+  - Birch/Tests (1.8.0):
     - Nimble
     - Quick
   - Nimble (13.0.0)
@@ -24,7 +24,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Anchorage: 1961bc81c84aeed54ad7ffc697c50cd9de748ba6
-  Birch: 3e560d20e1d4cdce8314a2262e3ccffdcb3b20ee
+  Birch: c00becfa8bfaa4b33d52085227230a6125a7dcf4
   Nimble: 97d90931cca412a23224ff29e258809f75c258f7
   Quick: d32871931c05547cb4e0bc9009d66a18b50d8558
 

@@ -1,5 +1,10 @@
 # Changes
 
+1.8.0
+----------
+- Support for XCode 15
+- Increase deployment targets to iOS 13, tVOS 13, macOS 10.15
+
 1.7.0
 ----------
 - Persist optOut changes.
