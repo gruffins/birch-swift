@@ -23,19 +23,19 @@ jobs:
       matrix:
         variant:
           - platform: ios
-            xcode: /Applications/Xcode_15.0.1.app
-            device: iPhone SE (3rd generation) (17.0.1)
+            xcode: /Applications/Xcode_15.1.app
+            device: iPhone SE (3rd generation) (17.2)
           - platform: ios
             xcode: /Applications/Xcode_14.3.1.app
             device: iPhone 14 (16.4)
           - platform: tvos
-            xcode: /Applications/Xcode_15.0.1.app
-            device: Apple TV (17.0)
+            xcode: /Applications/Xcode_15.1.app
+            device: Apple TV (17.2)
           - platform: tvos
             xcode: /Applications/Xcode_15.0.1.app
             device: Apple TV (16.4)
           - platform: macos
-            xcode: /Applications/Xcode_15.0.1.app
+            xcode: /Applications/Xcode_15.1.app
     name: Specs
     runs-on: macos-13
     steps:
