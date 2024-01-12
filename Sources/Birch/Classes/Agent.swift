@@ -57,6 +57,11 @@ public class Agent {
 
     /// Override the level set by the server. Defaults to NULL. This should be NULL in a production build so you can remotely adjust the log level.
     public var level: Level?
+    
+    /// Returns the current level used by the logger. This takes into account your override as well as the server configuration.
+    public var currentLevel: Level? {
+        engine?.currentLevel
+    }
 
     /// Whether to log synchronously or asynchronously. Defaults to FALSE. This should be FALSE in a production build.
     public var synchronous: Bool = false
@@ -90,7 +95,7 @@ public class Agent {
             let eventBus = EventBus()
             let storage = Storage(directory: directory, defaultLevel: options.defaultLevel)
             let source = Source(storage: storage, eventBus: eventBus)
-            let logger = Logger(agent: self, encryption: encryption)
+            let logger = Logger(storage: storage, agent: self, encryption: encryption)
             let network = Network(agent: self, host: options.host, apiKey: apiKey)
 
             engine = Engine(

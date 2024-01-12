@@ -25,7 +25,7 @@ class EngineTests: QuickSpec {
         beforeEach {
             agent = Agent(directory: "birch")
             storage = Storage(directory: "birch", defaultLevel: .error)
-            logger = Logger(agent: agent, encryption: nil)
+            logger = Logger(storage: storage, agent: agent, encryption: nil)
             eventBus = EventBus()
             source = Source(storage: storage, eventBus: eventBus)
             http = TestHTTP()
@@ -75,19 +75,19 @@ class EngineTests: QuickSpec {
                 }
 
                 it("logs the message") {
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     engine.log(level: .trace, message: { "message" })
                     expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
                 }
 
                 it("scrubs messages") {
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     engine.log(level: .trace, message: { "https://birch.ryanfung.com/?email=abcd+test@domain.com&password=password123" })
                     expect(String(data: FileManager.default.contents(atPath: logger.current.path)!, encoding: .utf8)).toEventually(contain("email=[FILTERED]&password=[FILTERED]"))
                 }
 
                 it("returns true") {
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     let result = engine.log(level: .trace, message: { "message" })
                     expect(result).to(beTrue())
 
@@ -100,7 +100,7 @@ class EngineTests: QuickSpec {
                 }
 
                 it("returns false") {
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     let result = engine.log(level: .trace, message: { "message" })
                     expect(result).to(beFalse())
                 }
@@ -252,6 +252,12 @@ class EngineTests: QuickSpec {
                 engine.trimFiles()
 
                 expect(Utils.fileExists(url: file)).toEventually(beTrue())
+            }
+        }
+        
+        describe("currentLevel()") {
+            it("returns the loggers level") {
+                expect(engine.currentLevel).to(equal(logger.currentLevel))
             }
         }
     }

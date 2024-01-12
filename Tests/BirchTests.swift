@@ -26,6 +26,7 @@ class BirchTests: QuickSpec {
         var iBlockCalled = false
         var wBlockCalled = false
         var eBlockCalled = false
+        var currentLevelCalled = false
 
         override var uuid: String? { "uuid" }
 
@@ -67,6 +68,11 @@ class BirchTests: QuickSpec {
             set {
                 _level = newValue
             }
+        }
+        
+        override var currentLevel: Level? {
+            currentLevelCalled = true
+            return nil
         }
 
         override func initialize(
@@ -355,6 +361,13 @@ class BirchTests: QuickSpec {
             it("calls the agent") {
                 Birch.e { "message" }
                 expect(agent.eBlockCalled).to(beTrue())
+            }
+        }
+        
+        describe("currentLevel()") {
+            it("calls the agent") {
+                let _ = Birch.currentLevel
+                expect(agent.currentLevelCalled).to(beTrue())
             }
         }
     }
