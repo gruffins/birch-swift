@@ -15,12 +15,14 @@ class Logger {
     private let queue = DispatchQueue(label: "Birch-Logger")
     private var fileHandle: FileHandle?
     private let agent: Agent
+    private let storage: Storage
 
     let encryption: Encryption?
     let directory: URL
     let current: URL
 
-    var level: Level = .error
+    var level: Level { storage.logLevel }
+    var currentLevel: Level { agent.level ?? level }
 
     var nonCurrentFiles: [URL] {
         do {
@@ -32,9 +34,11 @@ class Logger {
     }
 
     init(
+        storage: Storage,
         agent: Agent,
         encryption: Encryption?
     ) {
+        self.storage = storage
         self.agent = agent
         self.encryption = encryption
 
@@ -47,7 +51,6 @@ class Logger {
     }
 
     func log(level: Level, block: @escaping () -> String, original: @escaping () -> String) {
-        let currentLevel = agent.level ?? self.level
         if Utils.diskAvailable() && level.rawValue >= currentLevel.rawValue {
             let job = {
                 Utils.safeIgnore {

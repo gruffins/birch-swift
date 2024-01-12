@@ -10,6 +10,7 @@ import Foundation
 protocol EngineProtocol {
     var source: Source { get }
     var storage: Storage { get }
+    var currentLevel: Level { get }
 
     func start()
     @discardableResult func log(level: Level, message: @escaping () -> String) -> Bool
@@ -51,6 +52,10 @@ class Engine: EngineProtocol {
 
     let source: Source
     let storage: Storage
+    
+    var currentLevel: Level {
+        logger.currentLevel
+    }
 
     var timers: [TimerType: Timer] = [:]
 
@@ -182,7 +187,6 @@ class Engine: EngineProtocol {
             self.network.getConfiguration(source: self.source) { json in
                 if let rawValue = json["log_level"] as? Int, let level = Level(rawValue: rawValue) {
                     self.storage.logLevel = level
-                    self.logger.level = level
 
                     self.agent.debugStatement { "[Birch] Remote log level set to \(level)." }
                 }

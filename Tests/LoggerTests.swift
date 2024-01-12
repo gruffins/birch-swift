@@ -15,10 +15,12 @@ class LoggerTests: QuickSpec {
     override class func spec() {
         var agent: Agent!
         var logger: Logger!
+        var storage: Storage!
 
         beforeEach {
             agent = Agent(directory: "birch")
-            logger = Logger(agent: agent, encryption: nil)
+            storage = Storage(directory: "birch", defaultLevel: .error)
+            logger = Logger(storage: storage, agent: agent, encryption: nil)
             agent.debug = true
             agent.console = true
         }
@@ -49,19 +51,19 @@ class LoggerTests: QuickSpec {
 
             it("logs if local level overridden") {
                 agent.level = .trace
-                logger.level = .none
+                storage.logLevel = .none
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
                 expect(Utils.fileExists(url: logger.current)).to(beTrue())
             }
 
             it("skips logs lower than the current level") {
-                logger.level = .none
+                storage.logLevel = .none
                 logger.log(level: .trace, block: { "message" }, original: { "message "})
                 expect(Utils.fileExists(url: logger.current)).to(beFalse())
             }
 
             it("doesnt skip logs higher than the current level") {
-                logger.level = .trace
+                storage.logLevel = .trace
                 logger.log(level: .trace, block: { "message" }, original: { "message" })
                 expect(Utils.fileExists(url: logger.current)).to(beTrue())
             }
@@ -114,6 +116,7 @@ class LoggerTests: QuickSpec {
             context("with encryption") {
                 beforeEach {
                     logger = Logger(
+                        storage: storage,
                         agent: agent,
                         encryption: Encryption.create(
                             publicKey: EncryptionTests.Constants.PUBLIC_KEY
@@ -123,7 +126,7 @@ class LoggerTests: QuickSpec {
 
                 it("encrypts the logs") {
                     Utils.deleteFile(url: logger.current)
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).to(beTrue())
                     waitUntil(timeout: .seconds(5)) { done in
@@ -137,7 +140,7 @@ class LoggerTests: QuickSpec {
 
             context("without encryption") {
                 it("writes in plain text") {
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).toEventually(beTrue())
                     let contents = try String(contentsOf: logger.current, encoding: .utf8)
@@ -149,7 +152,7 @@ class LoggerTests: QuickSpec {
             context("with remote disabled") {
                 it("doesnt write to disk") {
                     agent.remote = false
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).to(beTrue())
                     let contents = try String(contentsOf: logger.current, encoding: .utf8)
@@ -160,7 +163,7 @@ class LoggerTests: QuickSpec {
             context("synchronously") {
                 it("logs") {
                     agent.synchronous = true
-                    logger.level = .trace
+                    storage.logLevel = .trace
                     logger.log(level: .trace, block: { "message" }, original: { "message" })
                     expect(Utils.fileExists(url: logger.current)).to(beTrue())
                 }
@@ -172,6 +175,20 @@ class LoggerTests: QuickSpec {
                 Utils.createFile(url: logger.current)
                 logger.rollFile()
                 expect(logger.nonCurrentFiles).notTo(beEmpty())
+            }
+        }
+        
+        describe("currentLevel()") {
+            it("factors the agent override") {
+                agent.level = .trace
+                storage.logLevel = .error
+                expect(logger.currentLevel).to(equal(.trace))
+            }
+            
+            it("returns the storage level") {
+                agent.level = nil
+                storage.logLevel = .error
+                expect(logger.currentLevel).to(equal(.error))
             }
         }
     }

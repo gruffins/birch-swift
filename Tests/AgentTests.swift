@@ -13,6 +13,8 @@ import Nimble
 
 class AgentTests: QuickSpec {
     private class TestEngine: EngineProtocol {
+        var currentLevel: Level = .error
+        
         let source: Source
         let storage: Storage
 
@@ -187,6 +189,12 @@ class AgentTests: QuickSpec {
             it("calls the engine") {
                 agent.e { "message" }
                 expect(engine.logCalled).to(beTrue())
+            }
+        }
+        
+        describe("currentLevel()") {
+            it("calls the engine") {
+                expect(agent.currentLevel).to(equal(engine.currentLevel))
             }
         }
     }

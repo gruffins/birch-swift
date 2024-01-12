@@ -83,6 +83,11 @@ public class Birch {
             agent.level = newValue
         }
     }
+    
+    /// Returns the current level used by the logger. This takes into account your override as well as the server configuration.
+    static public var currentLevel: Level? {
+        agent.currentLevel
+    }
 
     /// Whether to log synchronously or asynchronously. Defaults to FALSE. This should be FALSE in a production build.
     static public var synchronous: Bool {
