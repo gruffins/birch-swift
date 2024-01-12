@@ -1,5 +1,9 @@
 # Changes
 
+1.9.0
+----------
+- Adds ability to retrieve current log level.
+
 1.8.0
 ----------
 - Support for XCode 15

@@ -38,6 +38,10 @@ class ViewController: UIViewController {
     lazy var toggleSynchronousButton: UIButton = {
         createButton(title: "Toggle Synchronous", selector: #selector(self.toggleSynchronous))
     }()
+    
+    lazy var currentLevelButton: UIButton = {
+        createButton(title: "Print current level", selector: #selector(self.currentLogLevel))
+    }()
 
     var isStressTesting = false
 
@@ -48,7 +52,11 @@ class ViewController: UIViewController {
 
         stackView.edgeAnchors == view.edgeAnchors
 
-        [toggleDebugButton, toggleLevelButton, toggleConsoleButton, toggleConsoleButton, toggleRemoteButton, toggleSynchronousButton].forEach {
+        [
+            toggleDebugButton, toggleLevelButton, toggleConsoleButton,
+            toggleConsoleButton, toggleRemoteButton, toggleSynchronousButton,
+            currentLevelButton
+        ].forEach {
             stackView.addArrangedSubview($0)
         }
 
@@ -147,6 +155,10 @@ extension ViewController {
 
     @objc func error() {
         Birch.e { "error message" }
+    }
+    
+    @objc func currentLogLevel() {
+        print(Birch.currentLevel ?? "(nil)")
     }
 
     @objc func stressTest() {
