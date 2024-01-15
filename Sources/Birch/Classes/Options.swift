@@ -8,9 +8,9 @@
 import Foundation
 
 public class Options {
-    var scrubbers: [Scrubber] = [EmailScrubber(), PasswordScrubber()]
-    var host: String = "birch.ryanfung.com"
-    var defaultLevel: Level = .trace
+    public var scrubbers: [Scrubber] = [EmailScrubber(), PasswordScrubber()]
+    public var host: String = "birch.ryanfung.com"
+    public var defaultLevel: Level = .trace
 
     public init() {}
 }
