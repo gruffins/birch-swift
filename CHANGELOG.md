@@ -1,5 +1,9 @@
 # Changes
 
+1.9.1
+----------
+- Fixes accessibility to public options.
+
 1.9.0
 ----------
 - Adds ability to retrieve current log level.
