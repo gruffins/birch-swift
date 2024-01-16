@@ -72,6 +72,7 @@ class EngineTests: QuickSpec {
             context("opted in") {
                 beforeEach {
                     agent.optOut = false
+                    agent.synchronous = true
                 }
 
                 it("logs the message") {
@@ -117,6 +118,7 @@ class EngineTests: QuickSpec {
             context("opted in") {
                 beforeEach {
                     agent.optOut = false
+                    agent.synchronous = false
                 }
 
                 it("deletes empty files") {
